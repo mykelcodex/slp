@@ -1,0 +1,81 @@
+/* SLP Events — Color tokens
+   Palette: obsidian base, lavender-green star accent,
+   deep wine secondary, warm ivory light. Built for dramatic dark-first surfaces. */
+
+:root {
+  /* ---- Base neutrals (warm-tinted noir) ---- */
+  --ink-950: #08080b;
+  --ink-900: #0c0c11;
+  --ink-850: #101017;
+  --ink-800: #16161f;
+  --ink-700: #1f1f2a;
+  --ink-600: #2b2b38;
+  --ink-500: #3c3c4a;
+  --ink-400: #585868;
+  --ink-300: #86868f;
+  --ink-200: #b7b6bd;
+  --ink-100: #e4e1da;
+  --ivory:   #f6f2e9;
+  --ivory-dim: #ded9cc;
+
+  /* ---- Lavender green (primary accent) ---- */
+  --gold-100: #eaf1e6;
+  --gold-200: #cfe1c8;
+  --gold-300: #aecaa4;
+  --gold-400: #8fb583;
+  --gold-500: #74a066; /* primary */
+  --gold-600: #5b8450;
+  --gold-700: #46663d;
+
+  /* ---- Deep wine (secondary accent) ---- */
+  --wine-200: #bd6577;
+  --wine-300: #a44a5c;
+  --wine-500: #7c2639;
+  --wine-700: #551826;
+
+  /* ---- Ember / spark (special-effects glow) ---- */
+  --ember-300: #f2a877;
+  --ember-500: #e07d43;
+
+  /* ---- Semantic status ---- */
+  --success: #6fa85e;
+  --warning: #d8a24a;
+  --danger:  #c65a50;
+  --info:    #7d9bc0;
+
+  /* ================= SEMANTIC ALIASES ================= */
+  /* Surfaces (dark-first) */
+  --surface-base:     var(--ink-950);
+  --surface-raised:   var(--ink-850);
+  --surface-card:     var(--ink-800);
+  --surface-overlay:  var(--ink-700);
+  --surface-inverse:  var(--ivory);
+
+  /* Text */
+  --text-primary:   var(--ivory);
+  --text-secondary: var(--ink-200);
+  --text-muted:     var(--ink-300);
+  --text-on-gold:   var(--ink-950);
+  --text-on-light:  var(--ink-900);
+  --text-accent:    var(--gold-300);
+
+  /* Lines & borders */
+  --border-subtle:  rgba(246, 242, 233, 0.08);
+  --border-default: rgba(246, 242, 233, 0.14);
+  --border-strong:  rgba(246, 242, 233, 0.28);
+  --border-gold:    rgba(116, 160, 102, 0.55);
+
+  /* Brand actions */
+  --accent:         var(--gold-500);
+  --accent-hover:   var(--gold-400);
+  --accent-press:   var(--gold-600);
+  --accent-soft:    rgba(116, 160, 102, 0.12);
+  --secondary:      var(--wine-500);
+
+  /* Gradients & glows */
+  --gradient-gold: linear-gradient(135deg, var(--gold-300) 0%, var(--gold-500) 55%, var(--gold-700) 100%);
+  --gradient-noir: linear-gradient(180deg, #12121a 0%, #08080b 100%); /* @kind color */
+  --gradient-spotlight: radial-gradient(120% 90% at 50% -10%, rgba(116,160,102,0.22) 0%, rgba(8,8,11,0) 60%); /* @kind color */
+  --glow-gold: 0 0 32px rgba(116, 160, 102, 0.35);
+  --glow-ember: 0 0 40px rgba(224, 125, 67, 0.4);
+}

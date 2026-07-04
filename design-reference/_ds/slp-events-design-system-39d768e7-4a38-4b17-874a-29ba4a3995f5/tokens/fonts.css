@@ -1,0 +1,7 @@
+/* SLP Events — Webfonts
+   NOTE: No original brand font files were provided. These are the nearest
+   premium matches served from Google Fonts (see readme.md → Fonts).
+   Replace with licensed brand fonts by dropping files into assets/fonts/
+   and swapping these @import lines for local @font-face rules. */
+
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;0,6..96,800;1,6..96,400;1,6..96,500&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');

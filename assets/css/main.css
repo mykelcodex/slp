@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* ---- Theme variables ----
+   Light is the default; [data-theme="dark"] restores the original Midnight & Champagne palette.
+   The selector is element-scoped (not html-only) so a section can force a theme,
+   e.g. the home hero carries data-theme="dark" in both modes. */
+:root, [data-theme="light"] {
+    color-scheme: light;
+    --c-bg: #faf8f2; --c-bg2: #f4f1e8; --c-bg3: #efece2;
+    --c-surface: #ffffff; --c-surface2: #f6f3ea; --c-surface3: #e9e5d8;
+    --c-ink600: #c9c4b4; --c-ink500: #a5a090;
+    --c-fg: #1b1b13; --c-fg2: #2c2c21; --c-fg3: #3d3d31; --c-fg4: #565647; --c-fg5: #6f6f5f;
+    --c-gold100: #25411e; --c-gold200: #33552a; --c-gold300: #47703a; --c-gold400: #527c44;
+    --c-gold500: #5f8c50; --c-gold600: #4c703f; --c-gold700: #3c5c32;
+    --c-on-accent: #f8f6ee;
+    --line-rgb: 27,27,19; --scrim-rgb: 250,248,242; --accent-rgb: 95,140,80; --chip-rgb: 247,244,236;
+    --shadow50: rgba(30,30,20,0.16); --shadow45: rgba(30,30,20,0.13);
+    --gold-grad: linear-gradient(135deg, #79a86a 0%, #5f8c50 55%, #3f6134 100%);
+    --spotlight: radial-gradient(120% 90% at 50% -10%, rgba(95,140,80,0.14) 0%, rgba(250,248,242,0) 60%);
+    --glow: 0 0 32px rgba(95,140,80,0.25);
+    --shadow-gold-card: 0 18px 48px rgba(30,30,20,0.14), 0 0 0 1px rgba(95,140,80,0.2);
+}
+[data-theme="dark"] {
+    color-scheme: dark;
+    --c-bg: #08080b; --c-bg2: #0a0a0e; --c-bg3: #0c0c11;
+    --c-surface: #101017; --c-surface2: #16161f; --c-surface3: #1f1f2a;
+    --c-ink600: #2b2b38; --c-ink500: #3c3c4a;
+    --c-fg: #f6f2e9; --c-fg2: #ded9cc; --c-fg3: #b7b6bd; --c-fg4: #86868f; --c-fg5: #585868;
+    --c-gold100: #eaf1e6; --c-gold200: #cfe1c8; --c-gold300: #aecaa4; --c-gold400: #8fb583;
+    --c-gold500: #74a066; --c-gold600: #5b8450; --c-gold700: #46663d;
+    --c-on-accent: #08080b;
+    --line-rgb: 246,242,233; --scrim-rgb: 8,8,11; --accent-rgb: 116,160,102; --chip-rgb: 22,22,31;
+    --shadow50: rgba(0,0,0,0.5); --shadow45: rgba(0,0,0,0.45);
+    --gold-grad: linear-gradient(135deg, #aecaa4 0%, #74a066 55%, #46663d 100%);
+    --spotlight: radial-gradient(120% 90% at 50% -10%, rgba(116,160,102,0.22) 0%, rgba(8,8,11,0) 60%);
+    --glow: 0 0 32px rgba(116,160,102,0.35);
+    --shadow-gold-card: 0 18px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(116,160,102,0.18);
+}
+
+/* ---- Base ---- */
+html { scroll-behavior: smooth; }
+::selection { background: rgba(var(--accent-rgb),0.35); color: var(--c-fg); }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--c-bg3); }
+::-webkit-scrollbar-thumb { background: var(--c-ink600); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--c-gold600); }
+
+/* ---- Brand keyframes ---- */
+@keyframes kenburns { from { transform: scale(1.02); } to { transform: scale(1.14); } }
+@keyframes riseUp { from { opacity: 0; transform: translateY(34px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 12% { opacity: 0.85; } 85% { opacity: 0.15; } 100% { transform: translateY(-105vh); opacity: 0; } }
+@keyframes cueDrop { 0% { transform: translateY(-100%); } 60% { transform: translateY(100%); } 100% { transform: translateY(100%); } }
+@keyframes glowPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.4); } 55% { box-shadow: 0 0 0 14px rgba(37,211,102,0); } }
+@keyframes menuIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes flicker { 0%, 100% { opacity: 1; } 41% { opacity: 1; } 42% { opacity: 0.45; } 44% { opacity: 1; } 68% { opacity: 1; } 69% { opacity: 0.55; } 71% { opacity: 1; } }
+@keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }

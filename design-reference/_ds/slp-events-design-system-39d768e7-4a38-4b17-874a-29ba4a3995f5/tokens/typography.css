@@ -1,0 +1,51 @@
+/* SLP Events — Typography tokens
+   Display: Bodoni Moda (high-contrast Didone — luxury/editorial drama)
+   Text/UI: Manrope (clean modern grotesque)
+   Mono:   JetBrains Mono (details, ticket/code contexts) */
+
+:root {
+  --font-display: 'Bodoni Moda', 'Times New Roman', Georgia, serif;
+  --font-sans: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* Type scale */
+  --text-xs:   0.75rem;   /* 12 */
+  --text-sm:   0.875rem;  /* 14 */
+  --text-base: 1rem;      /* 16 */
+  --text-md:   1.125rem;  /* 18 */
+  --text-lg:   1.375rem;  /* 22 */
+  --text-xl:   1.75rem;   /* 28 */
+  --text-2xl:  2.25rem;   /* 36 */
+  --text-3xl:  3rem;      /* 48 */
+  --text-4xl:  4rem;      /* 64 */
+  --text-5xl:  5.5rem;    /* 88 */
+  --text-6xl:  7.5rem;    /* 120 */
+
+  /* Weights */
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Line heights */
+  --leading-tight: 1.04;
+  --leading-snug: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+
+  /* Letter spacing */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+  --tracking-eyebrow: 0.22em;   /* uppercase labels */
+
+  /* ---- Semantic roles ---- */
+  --type-display: var(--weight-regular) var(--text-5xl)/var(--leading-tight) var(--font-display);
+  --type-h1: var(--weight-regular) var(--text-3xl)/var(--leading-tight) var(--font-display);
+  --type-h2: var(--weight-medium) var(--text-2xl)/var(--leading-snug) var(--font-display);
+  --type-h3: var(--weight-semibold) var(--text-lg)/var(--leading-snug) var(--font-sans);
+  --type-body: var(--weight-regular) var(--text-base)/var(--leading-relaxed) var(--font-sans);
+  --type-body-sm: var(--weight-regular) var(--text-sm)/var(--leading-normal) var(--font-sans);
+  --type-label: var(--weight-semibold) var(--text-xs)/1 var(--font-sans);
+}

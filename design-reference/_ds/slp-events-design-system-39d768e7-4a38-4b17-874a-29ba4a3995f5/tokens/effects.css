@@ -1,0 +1,35 @@
+/* SLP Events — Radii, shadows, motion, blur tokens */
+
+:root {
+  /* Corner radii — crisp & tailored, not soft */
+  --radius-none: 0;
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+
+  /* Elevation — deep drop shadows on noir surfaces */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --shadow-inset: inset 0 1px 0 rgba(246, 242, 233, 0.06);
+
+  /* Signature gold-glow elevation for hero/CTA surfaces */
+  --shadow-glow: 0 0 32px rgba(116, 160, 102, 0.35);
+  --shadow-gold-card: 0 18px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(116, 160, 102, 0.18);
+
+  /* Blur */
+  --blur-sm: 6px;
+  --blur-md: 14px;
+  --blur-lg: 28px;
+
+  /* Motion — slow, cinematic, weighted */
+  --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1); /* @kind other */
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --ease-exit: cubic-bezier(0.7, 0, 0.84, 0); /* @kind other */
+  --dur-fast: 140ms; /* @kind other */
+  --dur-base: 260ms; /* @kind other */
+  --dur-slow: 480ms; /* @kind other */
+  --dur-cinematic: 900ms; /* @kind other */
+}
