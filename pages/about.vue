@@ -7,21 +7,16 @@ const values = [
     { icon: 'sparkles', title: 'In-house everything', desc: 'Performers, technicians, and gear are ours — no subcontracted surprises on your big day.' },
     { icon: 'shield', title: 'Safety as standard', desc: 'Fully insured, venue-approved equipment, and technicians trained on every effect we run.' },
     { icon: 'calendar', title: 'Choreographed to the second', desc: 'Every effect fires on a cue sheet we build with your DJ, planner, and photographer.' },
-    { icon: 'users', title: "You're the VIP", desc: 'One point of contact from first call to final confetti. We answer fast and show up early.' },
+    { icon: 'users', title: "You're the VIP", desc: 'One point of contact from first call to final cue. We answer fast and show up early.' },
 ];
 
 const timeline = [
-    { year: '2019', title: 'The first spark', desc: 'Two cold spark machines, one borrowed van, and a wedding that changed everything.' },
-    { year: '2021', title: 'Performers join the family', desc: 'The first Transformer robot suit arrives — and books out three months in one week.' },
-    { year: '2023', title: 'Full production house', desc: 'Clouds, CO₂, confetti, marquee letters — the complete SLP experience under one roof.' },
-    { year: 'Today', title: '650+ events and counting', desc: 'Weddings, festivals, corporate launches — every one treated like the only event on the calendar.', last: true },
+    { year: '2025', title: 'The first spark', desc: 'Two cold spark machines, one borrowed van, and a wedding that changed everything.' },
+    { year: '2025', title: 'Performers join the family', desc: 'The first Transformer robot suit arrives — and books out three months in one week.' },
+    { year: '2026', title: 'Full production house', desc: 'Clouds, fog effects, marquee letters — the complete SLP experience under one roof.' },
+    { year: 'Today', title: 'No. 1 event rental service', desc: 'Weddings, festivals, corporate launches — every one treated like the only event on the calendar.', last: true },
 ];
 
-const team = [
-    { initial: 'S', title: 'The Producers', role: 'Design & Planning', desc: 'They turn "we want something amazing" into a minute-by-minute show plan.', bg: 'radial-gradient(120% 120% at 30% 20%, rgba(var(--accent-rgb),0.35) 0%, var(--c-surface) 70%)', border: 'rgba(var(--accent-rgb),0.4)', color: 'var(--c-gold300)' },
-    { initial: 'L', title: 'The Performers', role: 'Robots, Gorilla & LED Crew', desc: 'Professional entertainers who know how to read a room — and then own it.', bg: 'radial-gradient(120% 120% at 30% 20%, rgba(124,38,57,0.45) 0%, var(--c-surface) 70%)', border: 'rgba(var(--line-rgb),0.14)', color: 'var(--c-fg2)' },
-    { initial: 'P', title: 'The Technicians', role: 'Effects & Safety', desc: 'Certified operators who make the spectacular look effortless — and keep it safe.', bg: 'radial-gradient(120% 120% at 30% 20%, rgba(224,125,67,0.35) 0%, var(--c-surface) 70%)', border: 'rgba(var(--line-rgb),0.14)', color: '#f2a877' },
-];
 </script>
 
 <template>
@@ -111,26 +106,6 @@ const team = [
                 <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 8 L37 27 L56 32 L37 37 L32 56 L27 37 L8 32 L27 27 Z" fill="var(--c-gold500)"></path></svg>
                 <p class="m-0 font-display font-medium italic text-[clamp(24px,3.4vw,38px)] leading-[1.4] text-ink-100">"A celebration should have a moment the whole room shares —<br>our job is to build it, hide it, and release it at the perfect second."</p>
                 <span class="text-xs tracking-[0.2em] uppercase text-ink-300">The SLP Event Philosophy</span>
-            </div>
-        </section>
-
-        <!-- TEAM -->
-        <section class="bg-ink-900 border-y border-subtle">
-            <div class="max-w-[1240px] mx-auto px-6 py-[clamp(72px,9vw,110px)]">
-                <div v-reveal class="flex flex-col gap-3.5 mb-[50px] max-w-[640px]">
-                    <UiEyebrow>The Team</UiEyebrow>
-                    <h2 class="m-0 font-display font-semibold text-[clamp(32px,4.2vw,52px)] leading-[1.1] text-ivory">The people behind the <em class="italic text-gold-300">curtain</em></h2>
-                </div>
-                <div v-reveal class="grid grid-cols-[repeat(auto-fit,minmax(min(250px,100%),1fr))] gap-5">
-                    <div v-for="m in team" :key="m.title" class="px-7 py-8 border border-subtle rounded-xl bg-ink-800 flex flex-col items-center text-center gap-3.5">
-                        <div class="w-[84px] h-[84px] rounded-full flex items-center justify-center font-display font-medium text-[28px]" :style="{ background: m.bg, border: `1px solid ${m.border}`, color: m.color }">{{ m.initial }}</div>
-                        <div>
-                            <h3 class="m-0 mb-1 text-[17px] font-bold text-ivory">{{ m.title }}</h3>
-                            <span class="text-[11.5px] tracking-[0.16em] uppercase text-gold-400">{{ m.role }}</span>
-                        </div>
-                        <p class="m-0 text-sm leading-[1.65] text-ink-200">{{ m.desc }}</p>
-                    </div>
-                </div>
             </div>
         </section>
 

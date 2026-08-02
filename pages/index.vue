@@ -23,20 +23,19 @@ const particles = [
 ];
 
 const featured = [
-    { to: '/entertainment', kicker: 'Signature', title: 'Signature Entertainment', desc: 'Transformer robots, a giant gorilla, and LED performers who pull every phone out of every pocket.', img: img('1485827404703-89b55fcc595e', 1000), big: true },
-    { to: '/effects', kicker: 'Atmosphere', title: 'Special Effects', desc: 'Clouds, cold sparks, CO₂, confetti — cinematic moments, venue-safe.', img: img('1467810563316-b5476525c0f9', 1000) },
-    { to: '/marquee', kicker: 'Statement', title: 'Marquee Rentals', desc: 'MARRY ME, names, numbers — four feet tall and glowing.', img: img('1518199266791-5375a83190b7', 1000) },
-    { to: '/packages', kicker: 'Curated', title: 'Event Packages', desc: 'Weddings, proposals, birthdays, corporate — curated and ready.', img: img('1519167758481-83f550bb49b3', 1000) },
+    { to: '/booking', kicker: 'Signature', title: 'Signature Entertainment', desc: 'Transformer robots, a giant gorilla, and LED performers who pull every phone out of every pocket.', img: '/images/led-robot-performer.jpeg' },
+    { to: '/booking', kicker: 'Atmosphere', title: 'Special Effects', desc: 'Clouds, cold sparks, fog effects — cinematic moments, venue-safe.', img: '/images/first-dance-clouds.jpeg' },
+    { to: '/booking', kicker: 'Statement', title: 'Marquee Rentals', desc: 'MARRY ME, names, numbers — four feet tall and glowing.', img: '/images/marry-me-rooftop.jpeg' },
 ];
 
 const signature = [
-    { n: '01', title: 'Dancing on the Clouds', desc: 'A knee-deep sea of soft white cloud rolls across the dance floor as you take your first dance. It photographs like a dream sequence — because it is one.', link: '/effects', linkLabel: 'See the effect', img: img('1511285560929-80b456fea0bc', 1200), flip: false },
-    { n: '02', title: 'Cold Sparkler Fountains', desc: 'Indoor-safe spark fountains that erupt on cue — for entrances, first kisses, cake cuttings, and the drop of the night. No flame, no smoke, all drama.', link: '/effects', linkLabel: 'See the effect', img: img('1467810563316-b5476525c0f9', 1200), flip: true },
-    { n: '03', title: 'Transformer Robot Entrances', desc: 'A ten-foot robot rolls in, transforms, and greets your guests by name. Kids scream, adults film, and your event becomes the one everyone compares the rest to.', link: '/entertainment', linkLabel: 'Meet the performers', img: img('1535378917042-10a22c95931a', 1200), flip: false },
+    { n: '01', title: 'Dancing on the Clouds', desc: 'A knee-deep sea of soft white cloud rolls across the dance floor as you take your first dance. It photographs like a dream sequence — because it is one.', link: '/gallery', linkLabel: 'View in Gallery', img: '/images/wedding-ballroom-production.jpeg', flip: false },
+    { n: '02', title: 'Cold Sparkler Fountains', desc: 'Indoor-safe spark fountains that erupt on cue — for entrances, first kisses, cake cuttings, and the drop of the night. No flame, no smoke, all drama.', link: '/gallery', linkLabel: 'View in Gallery', img: '/images/cold-spark-fountains.jpeg', flip: true },
+    { n: '03', title: 'Transformer Robot Entrances', desc: 'A ten-foot robot rolls in, transforms, and greets your guests by name. Kids scream, adults film, and your event becomes the one everyone compares the rest to.', link: '/gallery', linkLabel: 'View in Gallery', img: '/images/led-robot-performer.jpeg', flip: false },
 ];
 
 const stats = [
-    { value: 650, suffix: '+', text: '650+', label: 'Events brought to life' },
+    { static: true, text: 'No.1', label: 'Event rental service' },
     { value: 5.0, suffix: '★', text: '5.0★', label: 'Average client rating' },
     { value: 15, suffix: '', text: '15', label: 'Event types served' },
     { value: 12, suffix: '', text: '12', label: 'Signature experiences' },
@@ -53,7 +52,7 @@ const eventTiles = [
 
 const portfolio = [
     { img: img('1492684223066-81342ee5ff30', 800), alt: 'Gala finale' },
-    { img: img('1583939003579-730e3918a45a', 800), alt: 'Confetti send-off' },
+    { img: img('1504680177321-2e6a879aac86', 800), alt: 'Fog & haze set design' },
     { img: img('1514525253161-7a46d19cd819', 800), alt: 'Launch party' },
 ];
 
@@ -70,7 +69,7 @@ const process = [
         <!-- HERO -->
         <section data-theme="dark" class="relative min-h-svh flex items-center justify-center overflow-hidden bg-ink-950">
             <div class="absolute inset-0 overflow-hidden">
-                <img :src="img('1492684223066-81342ee5ff30', 2000)" alt="Confetti and sparks over a celebrating crowd" class="w-full h-full object-cover block opacity-[0.52] [animation:kenburns_26s_ease-in-out_infinite_alternate]">
+                <img :src="img('1492684223066-81342ee5ff30', 2000)" alt="Sparks and light over a celebrating crowd" class="w-full h-full object-cover block opacity-[0.52] [animation:kenburns_26s_ease-in-out_infinite_alternate]">
             </div>
             <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(var(--scrim-rgb),0.62)_0%,rgba(var(--scrim-rgb),0.45)_40%,rgba(var(--scrim-rgb),0.88)_82%,var(--c-bg)_100%)]"></div>
             <div class="absolute inset-0 bg-spotlight"></div>
@@ -124,7 +123,7 @@ const process = [
         <section class="max-w-[1240px] mx-auto px-6 py-[clamp(72px,9vw,110px)]">
             <div v-reveal class="flex flex-col items-center text-center gap-3.5 mb-[54px]">
                 <UiEyebrow>What We Do</UiEyebrow>
-                <h2 class="m-0 font-display font-semibold text-[clamp(34px,4.4vw,56px)] leading-[1.08] text-ivory">Five ways to make the room <em class="italic text-gold-300">stop</em></h2>
+                <h2 class="m-0 font-display font-semibold text-[clamp(34px,4.4vw,56px)] leading-[1.08] text-ivory">Three ways to make the room <em class="italic text-gold-300">stop</em></h2>
                 <p class="m-0 max-w-[58ch] text-base leading-[1.7] text-ink-200">Every experience is delivered by our team, end to end — designed, insured, and staged to feel effortless.</p>
             </div>
             <div class="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-5">
@@ -133,19 +132,18 @@ const process = [
                     :key="f.title"
                     v-reveal
                     :to="f.to"
-                    class="relative rounded-xl overflow-hidden border border-subtle bg-ink-800 no-underline flex flex-col transition-[transform,border-color,box-shadow] duration-300 ease-entrance hover:-translate-y-[5px] hover:border-gold-line hover:shadow-gold-card"
-                    :class="f.big ? 'row-span-2 min-h-[520px]' : ''"
+                    class="group relative rounded-xl overflow-hidden border border-subtle bg-ink-800 no-underline flex flex-col transition-[transform,border-color,box-shadow] duration-300 ease-entrance hover:-translate-y-[5px] hover:border-gold-line hover:shadow-gold-card"
                 >
-                    <div class="relative overflow-hidden" :class="f.big ? 'flex-1 min-h-[300px]' : 'aspect-[16/8]'">
-                        <img :src="f.img" :alt="f.title" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
-                        <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(var(--scrim-rgb),0)_30%,rgba(var(--scrim-rgb),0.55)_100%)]"></div>
+                    <div class="relative overflow-hidden aspect-[4/3]">
+                        <img :src="f.img" :alt="f.title" class="absolute inset-0 w-full h-full object-cover object-[50%_30%] transition-transform duration-500 ease-entrance group-hover:scale-[1.04]" loading="lazy">
+                        <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(var(--scrim-rgb),0)_55%,rgba(var(--scrim-rgb),0.45)_100%)]"></div>
                     </div>
-                    <div class="flex flex-col gap-2.5" :class="f.big ? 'p-[26px] pb-7' : 'px-6 pt-[22px] pb-6'">
+                    <div class="flex flex-col gap-2.5 px-6 pt-[22px] pb-6 flex-1">
                         <span class="text-[11px] tracking-[0.22em] uppercase text-gold-400">{{ f.kicker }}</span>
-                        <h3 class="m-0 font-display font-semibold text-ivory" :class="f.big ? 'text-[28px]' : 'text-2xl'">{{ f.title }}</h3>
-                        <p class="m-0 text-sm leading-[1.6] text-ink-200">{{ f.desc }}</p>
-                        <span v-if="f.big" class="mt-1.5 text-xs tracking-[0.16em] uppercase text-gold-300 flex items-center gap-2">
-                            Explore
+                        <h3 class="m-0 font-display font-semibold text-2xl text-ivory">{{ f.title }}</h3>
+                        <p class="m-0 text-sm leading-[1.6] text-ink-200 flex-1">{{ f.desc }}</p>
+                        <span class="mt-1.5 text-xs tracking-[0.16em] uppercase text-gold-300 flex items-center gap-2">
+                            Book Your Event
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
                         </span>
                     </div>
@@ -167,7 +165,7 @@ const process = [
                     class="grid grid-cols-[repeat(auto-fit,minmax(min(360px,100%),1fr))] gap-[clamp(28px,4vw,64px)] items-center"
                 >
                     <div class="relative rounded-xl overflow-hidden border border-subtle aspect-[16/11]" :class="s.flip ? 'order-2' : ''">
-                        <img :src="s.img" :alt="s.title" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
+                        <img :src="s.img" :alt="s.title" class="absolute inset-0 w-full h-full object-cover object-[50%_35%]" loading="lazy">
                     </div>
                     <div class="flex flex-col gap-4 py-2" :class="s.flip ? 'order-1' : ''">
                         <span class="font-mono text-[13px] text-gold-600 tracking-[0.12em]">{{ s.n }}</span>
@@ -186,7 +184,8 @@ const process = [
         <section class="max-w-[1240px] mx-auto px-6 py-[clamp(64px,8vw,96px)]">
             <div v-reveal class="grid grid-cols-[repeat(auto-fit,minmax(min(140px,100%),1fr))] gap-[clamp(20px,4vw,48px)] text-center">
                 <div v-for="st in stats" :key="st.label" class="flex flex-col gap-2 p-3">
-                    <span v-count="st.value" :data-suffix="st.suffix" class="font-display font-medium text-[clamp(44px,5.6vw,72px)] leading-none text-gold-300">{{ st.text }}</span>
+                    <span v-if="st.static" class="font-display font-medium text-[clamp(44px,5.6vw,72px)] leading-none text-gold-300">{{ st.text }}</span>
+                    <span v-else v-count="st.value" :data-suffix="st.suffix" class="font-display font-medium text-[clamp(44px,5.6vw,72px)] leading-none text-gold-300">{{ st.text }}</span>
                     <span class="text-[11.5px] tracking-[0.2em] uppercase text-ink-300">{{ st.label }}</span>
                 </div>
             </div>
@@ -254,7 +253,7 @@ const process = [
                         <img :src="p.img" :alt="p.alt" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
                     </NuxtLink>
                     <NuxtLink to="/gallery" class="relative rounded-xl overflow-hidden aspect-[4/5] border border-subtle no-underline">
-                        <img :src="img('1505236858219-8359eb29e329', 800)" alt="Confetti cannon burst" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
+                        <img :src="img('1498931299472-f7a63a5a1cfa', 800)" alt="Rooftop fireworks finale" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
                         <div class="absolute inset-0 bg-[rgba(var(--scrim-rgb),0.55)] flex items-center justify-center flex-col gap-2">
                             <span class="font-display font-medium text-[clamp(28px,3vw,38px)] text-ivory">+200</span>
                             <span class="text-[11px] tracking-[0.2em] uppercase text-gold-300">More moments</span>
@@ -285,9 +284,6 @@ const process = [
                         <span class="text-xs tracking-[0.1em] uppercase text-ink-300">{{ t.event }}</span>
                     </div>
                 </div>
-            </div>
-            <div v-reveal class="flex justify-center mt-9">
-                <UiButton to="/testimonials" variant="ghost">Read All Reviews</UiButton>
             </div>
         </section>
 
@@ -324,9 +320,6 @@ const process = [
                     <p class="m-0 text-[14.5px] leading-[1.7] text-ink-200">{{ f.a }}</p>
                 </UiAccordion>
             </div>
-            <div v-reveal class="flex justify-center mt-8">
-                <UiButton to="/faq" variant="ghost">All Questions</UiButton>
-            </div>
         </section>
 
         <!-- FINAL CTA -->
@@ -341,7 +334,6 @@ const process = [
                 <p v-reveal class="m-0 max-w-[52ch] text-base leading-[1.7] text-ink-200">Dates book fast — especially Saturdays. Tell us what you're celebrating and we'll take it from there.</p>
                 <div v-reveal class="flex flex-wrap gap-3.5 justify-center">
                     <UiButton to="/booking" size="lg">Start Planning</UiButton>
-                    <UiButton to="/quote" size="lg" variant="ghost">Request a Quote</UiButton>
                 </div>
             </div>
         </section>

@@ -24,8 +24,8 @@ const performers = [
     },
     {
         n: '03', title: 'LED Robot Performers',
-        desc: 'Glowing armor, synced light shows, and hand-held CO₂ cannons. Our LED robots arrive when the dance floor needs a second wind — and deliver a nightclub-grade spectacle wherever they stand.',
-        features: ['Light shows synced to your DJ', 'CO₂ cannon crowd moments', 'Solo or duo, multiple sets per night'],
+        desc: 'Glowing armor, synced light shows, and hand-held fog cannons. Our LED robots arrive when the dance floor needs a second wind — and deliver a nightclub-grade spectacle wherever they stand.',
+        features: ['Light shows synced to your DJ', 'Fog cannon crowd moments', 'Solo or duo, multiple sets per night'],
         tags: ['Weddings', 'Nightlife', 'Corporate', 'Holiday Parties'],
         img: img('1574391884720-bbc3740c59d1', 1200), alt: 'Dancers under purple light and fog', flip: false,
     },

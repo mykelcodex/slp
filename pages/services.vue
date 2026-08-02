@@ -1,46 +1,34 @@
 <script setup>
-import { img } from '~/data/site.js';
-
 useHead({ title: 'Services — SLP Events' });
 
 const families = [
     {
-        to: '/entertainment', kicker: '01 — PERFORMERS', title: 'Signature Entertainment',
-        desc: 'Ten-foot Transformer robots, a giant gorilla with impeccable comedic timing, and LED robot performers with CO₂ cannons. Interactive, photogenic, unforgettable.',
+        to: '/booking', kicker: '01 — PERFORMERS', title: 'Signature Entertainment',
+        desc: 'Ten-foot Transformer robots, a giant gorilla with impeccable comedic timing, and LED robot performers with fog cannons. Interactive, photogenic, unforgettable.',
         chips: ['Transformer Robot', 'Giant Gorilla', 'LED Robots'],
-        linkLabel: 'Meet the performers',
-        img: img('1485827404703-89b55fcc595e', 1200), alt: 'Robot performer greeting guests', flip: false,
+        linkLabel: 'Book Your Event',
+        img: '/images/led-robot-performer.jpeg', alt: 'LED robot performer lighting up a ballroom crowd', flip: false,
     },
     {
-        to: '/effects', kicker: '02 — ATMOSPHERE', title: 'Special Effects',
-        desc: 'Dancing on the clouds, cold sparkler fountains, CO₂ jets, fog & haze, confetti cannons and bubbles — cinematic effects, all indoor-safe and venue-approved.',
-        chips: ['Clouds', 'Cold Sparklers', 'CO₂', 'Confetti'],
-        linkLabel: 'Explore the effects',
-        img: img('1492684223066-81342ee5ff30', 1200), alt: 'Sparks and confetti in a dark venue', flip: true,
+        to: '/booking', kicker: '02 — ATMOSPHERE', title: 'Special Effects',
+        desc: 'Dancing on the clouds, cold sparkler fountains, fog jets, haze and bubbles — cinematic effects, all indoor-safe and venue-approved.',
+        chips: ['Clouds', 'Cold Sparklers', 'Fog'],
+        linkLabel: 'Book Your Event',
+        img: '/images/cold-spark-fountains.jpeg', alt: 'Cold spark fountains lining a ballroom aisle', flip: true,
     },
     {
-        to: '/marquee', kicker: '03 — STATEMENT PIECES', title: 'Marquee Rentals',
+        to: '/booking', kicker: '03 — STATEMENT PIECES', title: 'Marquee Rentals',
         desc: 'Four-foot light-up letters and numbers. MARRY ME, LOVE, names, ages, initials — delivered, styled, and glowing before guests arrive.',
-        chips: ['MARRY ME', 'Letters', 'Numbers', 'Custom Phrases'],
-        linkLabel: 'See the letters',
-        img: img('1518199266791-5375a83190b7', 1200), alt: 'Glowing lights bokeh', flip: false,
-    },
-    {
-        to: '/packages', kicker: '04 — CURATED', title: 'Event Packages',
-        desc: 'Our most-loved combinations, curated for weddings, proposals, birthdays, corporate events, and grand openings. One booking, a full show.',
-        chips: [],
-        linkLabel: 'Browse packages',
-        img: img('1519167758481-83f550bb49b3', 1200), alt: 'Grand ballroom set for an event', flip: true,
+        chips: ['MARRY ME', 'Letters', 'Numbers'],
+        linkLabel: 'Book Your Event',
+        img: '/images/marry-me-marquee.jpeg', alt: 'MARRY ME marquee letters at a candlelit proposal', flip: false,
     },
 ];
 
 const addons = [
-    'Fog & haze ambiance',
-    'Bubble effects',
-    'Extra performance hour',
-    'Custom marquee phrases',
-    'Balloon styling partner',
-    'On-cue show calling',
+    { title: 'Fog & Haze Ambiance', desc: 'A whisper of atmosphere that makes every beam of light — and every photo — cinematic.' },
+    { title: 'Extra Performance Hour', desc: 'Keep the performers, sparks, and energy going long after the scheduled finale.' },
+    { title: 'On-Cue Show Calling', desc: 'A dedicated show-caller syncing every effect with your DJ, MC, and photographer.' },
 ];
 </script>
 
@@ -51,7 +39,7 @@ const addons = [
             <div class="max-w-[900px] mx-auto px-6 pt-[clamp(150px,18vw,210px)] pb-[clamp(70px,9vw,110px)] flex flex-col items-center text-center gap-[22px]">
                 <UiEyebrow>Our Services</UiEyebrow>
                 <h1 class="m-0 font-display font-semibold text-[clamp(42px,7vw,86px)] leading-[1.04] text-ivory [animation:riseUp_900ms_cubic-bezier(0.16,1,0.3,1)_both]">Pick your kind of <em class="italic text-gold-300">spectacular</em></h1>
-                <p class="m-0 max-w-[58ch] text-[clamp(15px,1.6vw,17px)] leading-[1.75] text-ink-200 [animation:riseUp_900ms_cubic-bezier(0.16,1,0.3,1)_0.2s_both]">Five families of experiences — mix and match, or let us curate. Every one arrives with our crew, our insurance, and our obsession with timing.</p>
+                <p class="m-0 max-w-[58ch] text-[clamp(15px,1.6vw,17px)] leading-[1.75] text-ink-200 [animation:riseUp_900ms_cubic-bezier(0.16,1,0.3,1)_0.2s_both]">Four families of experiences — mix and match, or let us curate. Every one arrives with our crew, our insurance, and our obsession with timing.</p>
             </div>
         </section>
 
@@ -64,8 +52,8 @@ const addons = [
                 :to="f.to"
                 class="grid grid-cols-[repeat(auto-fit,minmax(min(340px,100%),1fr))] rounded-2xl overflow-hidden border border-subtle bg-ink-800 no-underline cursor-pointer transition-[transform,border-color,box-shadow] duration-300 ease-entrance hover:-translate-y-1 hover:border-gold-line hover:shadow-gold-card"
             >
-                <div class="relative min-h-[300px]" :class="f.flip ? 'order-2' : ''">
-                    <img :src="f.img" :alt="f.alt" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
+                <div class="relative min-h-[420px] max-md:aspect-[3/4]" :class="f.flip ? 'order-2' : ''">
+                    <img :src="f.img" :alt="f.alt" class="absolute inset-0 w-full h-full object-cover object-[50%_30%]" loading="lazy">
                     <div class="absolute inset-0" :class="f.flip ? 'bg-[linear-gradient(270deg,rgba(var(--scrim-rgb),0)_60%,rgba(var(--chip-rgb),0.9)_100%)]' : 'bg-[linear-gradient(90deg,rgba(var(--scrim-rgb),0)_60%,rgba(var(--chip-rgb),0.9)_100%)]'"></div>
                 </div>
                 <div class="p-[clamp(28px,4vw,48px)] flex flex-col gap-3.5 justify-center" :class="f.flip ? 'order-1' : ''">
@@ -83,16 +71,24 @@ const addons = [
             </NuxtLink>
 
             <!-- ADD-ONS -->
-            <div v-reveal class="rounded-2xl border border-subtle bg-ink-850 p-[clamp(28px,4vw,48px)]">
-                <div class="flex flex-wrap items-start justify-between gap-7">
-                    <div class="flex flex-col gap-3 max-w-[46ch]">
-                        <span class="font-mono text-xs text-gold-600 tracking-[0.12em]">05 — FINISHING TOUCHES</span>
-                        <h2 class="m-0 font-display font-semibold text-[clamp(26px,3vw,36px)] text-ivory">Add-On Services</h2>
-                        <p class="m-0 text-[15px] leading-[1.75] text-ink-200">Layer these onto any experience or package for extra polish.</p>
-                    </div>
-                    <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 flex-1 min-w-[min(420px,100%)]">
-                        <div v-for="a in addons" :key="a" class="flex items-center gap-2.5 px-[18px] py-3.5 border border-[rgba(var(--line-rgb),0.1)] rounded-xl text-ivory-dim text-sm">
-                            <span class="w-[7px] h-[7px] rotate-45 bg-gold-500 flex-none"></span>{{ a }}
+            <div v-reveal class="rounded-2xl border border-subtle bg-ink-850 overflow-hidden grid grid-cols-[repeat(auto-fit,minmax(min(340px,100%),1fr))]">
+                <div class="p-[clamp(28px,4vw,48px)] flex flex-col gap-3.5 justify-center">
+                    <span class="font-mono text-xs text-gold-600 tracking-[0.12em]">04 — FINISHING TOUCHES</span>
+                    <h2 class="m-0 font-display font-semibold text-[clamp(26px,3vw,36px)] text-ivory">Add-On Services</h2>
+                    <p class="m-0 text-[15px] leading-[1.75] text-ink-200 max-w-[42ch]">Layer these onto any experience for extra polish — quoted alongside your booking and run by the same crew.</p>
+                    <div class="mt-2"><UiButton to="/booking">Book Your Event</UiButton></div>
+                </div>
+                <div class="flex flex-col justify-center border-t md:border-t-0 md:border-l border-[rgba(var(--line-rgb),0.1)]">
+                    <div
+                        v-for="(a, i) in addons"
+                        :key="a.title"
+                        class="flex items-start gap-5 px-[clamp(24px,3vw,40px)] py-[26px]"
+                        :class="i > 0 ? 'border-t border-[rgba(var(--line-rgb),0.1)]' : ''"
+                    >
+                        <span class="font-mono text-[13px] text-gold-600 pt-0.5">0{{ i + 1 }}</span>
+                        <div class="flex flex-col gap-1.5">
+                            <span class="text-base font-semibold text-ivory">{{ a.title }}</span>
+                            <span class="text-[13.5px] leading-[1.65] text-ink-300 max-w-[48ch]">{{ a.desc }}</span>
                         </div>
                     </div>
                 </div>
@@ -102,7 +98,6 @@ const addons = [
         <!-- CTA -->
         <section class="max-w-[1240px] mx-auto px-6 pb-[clamp(72px,9vw,110px)]">
             <CtaBanner title="Not sure what fits your event?" desc="Tell us the occasion and the vibe — we'll recommend the perfect combination.">
-                <UiButton to="/quote" variant="ghost">Request a Quote</UiButton>
                 <UiButton to="/booking">Book Your Event</UiButton>
             </CtaBanner>
         </section>

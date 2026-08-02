@@ -6,9 +6,8 @@ useHead({ title: 'Special Effects — SLP Events' });
 const effects = [
     { title: 'Dancing on the Clouds', desc: 'Dry-ice cloud that hugs the floor — the signature first-dance effect. No smoke alarms, no residue.', best: 'Best for: first dances · proposals', img: img('1511285560929-80b456fea0bc'), alt: 'Dancing on the clouds' },
     { title: 'Cold Sparklers', desc: 'Indoor-safe spark fountains, 6–15 ft tall, fired on cue. The most requested effect we carry.', best: 'Best for: entrances · first kiss · cake cutting', img: img('1467810563316-b5476525c0f9'), alt: 'Cold sparkler' },
-    { title: 'CO₂ Effects', desc: 'Concert-grade cryo jets and handheld cannons. Instant energy for drops, reveals, and dance sets.', best: 'Best for: dance floors · launches · reveals', img: img('1514525253161-7a46d19cd819'), alt: 'CO2 jets over a crowd' },
+    { title: 'Fog Effects', desc: 'Concert-grade fog jets and handheld cannons. Instant energy for drops, reveals, and dance sets.', best: 'Best for: dance floors · launches · reveals', img: img('1514525253161-7a46d19cd819'), alt: 'Fog jets over a crowd' },
     { title: 'Fog & Haze', desc: 'A whisper of haze makes every beam of light visible — the secret behind every cinematic photo.', best: 'Best for: photography · ambiance · light shows', img: img('1504680177321-2e6a879aac86'), alt: 'Fog and haze' },
-    { title: 'Confetti Cannons', desc: 'Custom colors, biodegradable options, and a cleanup crew included. The exclamation point of any night.', best: 'Best for: countdowns · send-offs · gender reveals', img: img('1505236858219-8359eb29e329'), alt: 'Confetti burst' },
     { title: 'Bubble Effects', desc: 'Cascades of bubbles — with optional fog-filled "ghost bubbles" — for daytime magic and kids\u2019 moments.', best: 'Best for: baby showers · daytime events · kids', img: img('1513151233558-d860c5398176'), alt: 'Floating shimmer in the air' },
 ];
 
@@ -22,7 +21,7 @@ const safety = [
 const setup = [
     { phase: 'BEFORE', desc: 'We coordinate with your venue, walk the floor plan, and stage equipment 2–3 hours ahead — hidden from guests.' },
     { phase: 'DURING', desc: 'A technician runs each effect on a cue sheet synced with your DJ and photographer. Nothing fires early. Nothing fires late.' },
-    { phase: 'AFTER', desc: 'We tear down quietly and leave the venue exactly as we found it — confetti cleanup included, always.' },
+    { phase: 'AFTER', desc: 'We tear down quietly and leave the venue exactly as we found it — full cleanup included, always.' },
 ];
 </script>
 
@@ -35,7 +34,7 @@ const setup = [
             <div class="relative max-w-[1240px] mx-auto w-full px-6 pt-[clamp(150px,18vw,220px)] pb-[clamp(48px,6vw,72px)] flex flex-col gap-5">
                 <UiEyebrow>Luxury Special Effects</UiEyebrow>
                 <h1 class="m-0 font-display font-semibold text-[clamp(42px,7vw,88px)] leading-[1.04] text-ivory max-w-[15ch] [animation:riseUp_900ms_cubic-bezier(0.16,1,0.3,1)_both]">Atmosphere, on <em class="italic text-gold-300">cue</em></h1>
-                <p class="m-0 max-w-[58ch] text-[clamp(15px,1.6vw,17px)] leading-[1.75] text-ink-200 [animation:riseUp_900ms_cubic-bezier(0.16,1,0.3,1)_0.2s_both]">Six cinematic effects, each timed to the second and safe for indoor venues. This is how a moment becomes a scene.</p>
+                <p class="m-0 max-w-[58ch] text-[clamp(15px,1.6vw,17px)] leading-[1.75] text-ink-200 [animation:riseUp_900ms_cubic-bezier(0.16,1,0.3,1)_0.2s_both]">Five cinematic effects, each timed to the second and safe for indoor venues. This is how a moment becomes a scene.</p>
                 <div class="flex items-center gap-2.5 text-xs tracking-[0.14em] uppercase text-ink-300 [animation:riseUp_900ms_cubic-bezier(0.16,1,0.3,1)_0.35s_both]">
                     <span>Indoor-safe</span><span class="text-gold-600">·</span><span>Fully insured</span><span class="text-gold-600">·</span><span>Venue-approved</span>
                 </div>
@@ -68,7 +67,7 @@ const setup = [
                 <div v-reveal class="flex flex-col gap-4">
                     <UiEyebrow>Safety First, Always</UiEyebrow>
                     <h2 class="m-0 font-display font-semibold text-[clamp(30px,3.8vw,48px)] leading-[1.1] text-ivory">Spectacular doesn't mean <em class="italic text-gold-300">risky</em></h2>
-                    <p class="m-0 text-[15px] leading-[1.75] text-ink-200 max-w-[56ch]">Every effect we run is chosen specifically because it's safe around guests. Cold spark machines produce sparks you could pass a hand through. Our clouds are food-grade dry ice. Our confetti is flame-retardant and biodegradable.</p>
+                    <p class="m-0 text-[15px] leading-[1.75] text-ink-200 max-w-[56ch]">Every effect we run is chosen specifically because it's safe around guests. Cold spark machines produce sparks you could pass a hand through. Our clouds are food-grade dry ice. Our fog jets are non-toxic and event-rated.</p>
                     <p class="m-0 text-[15px] leading-[1.75] text-ink-200 max-w-[56ch]">We carry comprehensive liability insurance, provide certificates to your venue before the event, and staff a trained technician on every machine, all night.</p>
                 </div>
                 <div v-reveal class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3.5">
@@ -101,7 +100,6 @@ const setup = [
         <!-- CTA -->
         <section class="max-w-[1240px] mx-auto px-6 pb-[clamp(72px,9vw,110px)]">
             <CtaBanner title="Which effect fits your moment?" desc="Tell us the event and we'll recommend the perfect combination — most clients pair two.">
-                <UiButton to="/quote" variant="ghost">Request a Quote</UiButton>
                 <UiButton to="/booking">Book Effects</UiButton>
             </CtaBanner>
         </section>
