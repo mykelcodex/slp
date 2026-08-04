@@ -35,8 +35,8 @@ const signature = [
 ];
 
 const stats = [
-    { static: true, text: 'No.1', label: 'Event rental service' },
-    { value: 5.0, suffix: '★', text: '5.0★', label: 'Average client rating' },
+    { value: 1, suffix: '', text: '1', star: true, label: 'Event rental service' },
+    { value: '5.0', suffix: '', text: '5.0', star: true, label: 'Average client rating' },
     { value: 15, suffix: '', text: '15', label: 'Event types served' },
     { value: 12, suffix: '', text: '12', label: 'Signature experiences' },
 ];
@@ -184,8 +184,10 @@ const process = [
         <section class="max-w-[1240px] mx-auto px-6 py-[clamp(64px,8vw,96px)]">
             <div v-reveal class="grid grid-cols-[repeat(auto-fit,minmax(min(140px,100%),1fr))] gap-[clamp(20px,4vw,48px)] text-center">
                 <div v-for="st in stats" :key="st.label" class="flex flex-col gap-2 p-3">
-                    <span v-if="st.static" class="font-display font-medium text-[clamp(44px,5.6vw,72px)] leading-none text-gold-300">{{ st.text }}</span>
-                    <span v-else v-count="st.value" :data-suffix="st.suffix" class="font-display font-medium text-[clamp(44px,5.6vw,72px)] leading-none text-gold-300">{{ st.text }}</span>
+                    <span class="flex items-start justify-center gap-1 font-sans font-semibold text-[clamp(40px,5vw,64px)] leading-none text-gold-300">
+                        <span v-count="st.value" :data-suffix="st.suffix">{{ st.text }}</span>
+                        <span v-if="st.star" aria-hidden="true" class="text-[0.45em] mt-[0.08em] bg-[linear-gradient(135deg,#fbe9a6_0%,#f2cd6a_38%,#d9a437_68%,#f7e08b_100%)] bg-clip-text text-transparent [filter:drop-shadow(0_0_12px_rgba(242,205,106,0.6))] [animation:twinkle_2.6s_ease-in-out_infinite]">★</span>
+                    </span>
                     <span class="text-[11.5px] tracking-[0.2em] uppercase text-ink-300">{{ st.label }}</span>
                 </div>
             </div>

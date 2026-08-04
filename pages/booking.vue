@@ -1,6 +1,6 @@
 <script setup>
 import { computed, reactive, ref } from 'vue';
-import { img, serviceOptions, budgets, addons, whatsappHref, WHATSAPP_NUMBER } from '~/data/site.js';
+import { img, serviceOptions, budgets, addons } from '~/data/site.js';
 
 useHead({ title: 'Book Your Event — SLP Events' });
 
@@ -26,9 +26,6 @@ const toggle = (list, v) => {
 
 const nextLabel = computed(() => (step.value === 4 ? 'Send Inquiry' : 'Continue'));
 const summary = computed(() => `${bk.eventType || 'Your event'}${bk.date ? ' · ' + bk.date : ''} · ${bk.services.length} experience${bk.services.length === 1 ? '' : 's'}`);
-const waBooking = computed(() =>
-    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi SLP Events! I just sent a booking inquiry for ${bk.eventType || 'my event'}${bk.date ? ' on ' + bk.date : ''}. Excited to plan!`)}`
-);
 
 const back = () => { step.value = Math.max(1, step.value - 1); error.value = ''; };
 const next = () => {
@@ -73,12 +70,6 @@ const restart = () => {
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--c-gold400)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>
                         {{ reassurance }}
                     </div>
-                    <div class="h-px bg-[rgba(var(--line-rgb),0.08)] my-1.5"></div>
-                    <span class="text-[12.5px] text-ink-300">Prefer to chat?</span>
-                    <a :href="whatsappHref()" target="_blank" rel="noopener" class="flex items-center gap-2.5 text-gold-400 no-underline text-sm font-semibold">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm5.5 14.2c-.2.7-1.3 1.3-1.9 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-2.9-1.3-4.8-4.2-5-4.4-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4-.1.7.5l.9 2.3c.1.2.1.4 0 .6l-.4.6-.5.6c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.5.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2.1 1c.3.1.5.2.6.3.1.2.1.7-.1 1.3z"></path></svg>
-                        Message us on WhatsApp
-                    </a>
                 </div>
             </div>
 
@@ -204,10 +195,6 @@ const restart = () => {
                     <h2 class="m-0 font-display font-semibold text-[clamp(28px,3.6vw,40px)] text-ivory">Your moment is in motion.</h2>
                     <p class="m-0 max-w-[44ch] text-[15px] leading-[1.75] text-ink-200">Thank you! We've received your inquiry for <strong class="text-ivory-dim">{{ summary }}</strong>. Expect a custom proposal within 24 hours.</p>
                     <div class="flex flex-wrap gap-3 justify-center">
-                        <a :href="waBooking" target="_blank" rel="noopener" class="flex items-center gap-2.5 px-6 h-12 rounded-full bg-[#1da851] text-ivory no-underline text-[13px] font-bold tracking-[0.06em] uppercase">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#f6f2e9"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm5.5 14.2c-.2.7-1.3 1.3-1.9 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-2.9-1.3-4.8-4.2-5-4.4-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4-.1.7.5l.9 2.3c.1.2.1.4 0 .6l-.4.6-.5.6c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.5.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2.1 1c.3.1.5.2.6.3.1.2.1.7-.1 1.3z"></path></svg>
-                            Fast-track on WhatsApp
-                        </a>
                         <UiButton to="/gallery" variant="ghost">Browse the Gallery</UiButton>
                     </div>
                     <button class="bg-transparent border-none cursor-pointer text-ink-400 text-[12.5px] underline mt-1 hover:text-ink-300" @click="restart">Start a new inquiry</button>

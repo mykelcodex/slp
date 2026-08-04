@@ -36,7 +36,6 @@ const visible = computed(() => faqs.filter((f) => f.cat === cat.value));
                     <p class="m-0 text-sm text-ink-200">Real answers from real humans, fast.</p>
                 </div>
                 <div class="flex flex-wrap gap-3">
-                    <UiButton to="/contact" variant="ghost">Contact Us</UiButton>
                     <UiButton to="/booking">Book Your Event</UiButton>
                 </div>
             </div>

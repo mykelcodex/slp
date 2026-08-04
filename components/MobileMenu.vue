@@ -1,10 +1,9 @@
 <script setup>
 import { onMounted, onUnmounted } from 'vue';
-import { menuItems, whatsappHref } from '~/data/site.js';
+import { menuItems } from '~/data/site.js';
 
 const emit = defineEmits(['close']);
 const route = useRoute();
-const wa = whatsappHref();
 
 const onKey = (e) => e.key === 'Escape' && emit('close');
 onMounted(() => window.addEventListener('keydown', onKey));
@@ -41,10 +40,6 @@ onUnmounted(() => window.removeEventListener('keydown', onKey));
 
         <div class="pt-[18px] pb-7 px-[clamp(20px,5vw,40px)] border-t border-subtle flex flex-col gap-3">
             <UiButton to="/booking" size="lg" full-width @click="emit('close')">Book Your Event</UiButton>
-            <a :href="wa" target="_blank" rel="noopener" class="flex items-center justify-center gap-2.5 h-[50px] rounded-full border border-[rgba(var(--line-rgb),0.16)] text-ivory no-underline text-[13px] font-semibold tracking-[0.08em] uppercase">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm5.5 14.2c-.2.7-1.3 1.3-1.9 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-2.9-1.3-4.8-4.2-5-4.4-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4-.1.7.5l.9 2.3c.1.2.1.4 0 .6l-.4.6-.5.6c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.5.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2.1 1c.3.1.5.2.6.3.1.2.1.7-.1 1.3z"></path></svg>
-                <span>Chat on WhatsApp</span>
-            </a>
         </div>
     </div>
 </template>

@@ -1,13 +1,10 @@
 // Site-wide content data, extracted 1:1 from the design.
 
-export const WHATSAPP_NUMBER = '15550000000';
+export const PHONE_NUMBER = '15550000000';
 export const SERVICE_AREA = 'Serving the Tri-State Area & beyond';
 
-export const whatsappHref = (text = "Hi SLP Events! I'd love to plan something unforgettable.") =>
-    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
-
 export const phoneDisplay = () =>
-    '+' + WHATSAPP_NUMBER.replace(/(\d)(\d{3})(\d{3})(\d{4})$/, '$1 ($2) $3-$4');
+    '+' + PHONE_NUMBER.replace(/(\d)(\d{3})(\d{3})(\d{4})$/, '$1 ($2) $3-$4');
 
 export const img = (id, w = 900) =>
     `https://images.unsplash.com/photo-${id}?w=${w}&q=80&auto=format&fit=crop`;
@@ -17,7 +14,6 @@ export const navItems = [
     { id: 'services', label: 'Services' },
     { id: 'gallery', label: 'Gallery' },
     { id: 'events', label: 'Events' },
-    { id: 'contact', label: 'Contact' },
 ];
 
 export const menuItems = [
@@ -32,7 +28,6 @@ export const menuItems = [
     { id: 'testimonials', label: 'Testimonials' },
     { id: 'faq', label: 'FAQ' },
     { id: 'quote', label: 'Custom Quote' },
-    { id: 'contact', label: 'Contact' },
 ];
 
 export const footerExplore = [

@@ -46,7 +46,7 @@ useHead({ title: 'Events We Serve — SLP Events' });
         <!-- CTA -->
         <section class="max-w-[1240px] mx-auto px-6 pb-[clamp(72px,9vw,110px)]">
             <CtaBanner title="Don't see your occasion?" desc="If it deserves a celebration, it deserves a moment. Tell us what you're planning.">
-                <UiButton to="/contact" size="lg">Talk to Us</UiButton>
+                <UiButton to="/booking" size="lg">Book Your Event</UiButton>
             </CtaBanner>
         </section>
     </main>

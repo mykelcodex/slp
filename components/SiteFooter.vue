@@ -1,7 +1,6 @@
 <script setup>
-import { footerExplore, footerServices, whatsappHref, phoneDisplay, SERVICE_AREA } from '~/data/site.js';
+import { footerExplore, footerServices, phoneDisplay, SERVICE_AREA } from '~/data/site.js';
 
-const wa = whatsappHref();
 const phone = phoneDisplay();
 </script>
 
@@ -33,7 +32,6 @@ const phone = phoneDisplay();
                 <div class="flex flex-col gap-[11px] text-sm text-ink-200">
                     <span>hello@slpevents.com</span>
                     <span>{{ phone }}</span>
-                    <a :href="wa" target="_blank" rel="noopener" class="text-gold-400 no-underline">WhatsApp us →</a>
                     <span class="text-ink-300">{{ SERVICE_AREA }}</span>
                     <div class="flex gap-4 mt-2 text-ink-300">
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17" cy="7" r="1" fill="currentColor" stroke="none"></circle></svg>
