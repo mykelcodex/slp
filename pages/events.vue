@@ -34,7 +34,7 @@ useHead({ title: 'Events We Serve — SLP Events' });
                         <div class="flex flex-wrap gap-[7px]">
                             <span v-for="s in ev.services" :key="s" class="px-3 py-[5px] rounded-full bg-[rgba(var(--accent-rgb),0.08)] border border-[rgba(var(--accent-rgb),0.25)] text-[11.5px] text-gold-400">{{ s }}</span>
                         </div>
-                        <NuxtLink to="/quote" class="text-[11.5px] tracking-[0.16em] uppercase text-gold-300 flex items-center gap-2 w-fit no-underline hover:text-gold-200">
+                        <NuxtLink to="/booking" class="text-[11.5px] tracking-[0.16em] uppercase text-gold-300 flex items-center gap-2 w-fit no-underline hover:text-gold-200">
                             Plan this event
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
                         </NuxtLink>

@@ -4,8 +4,8 @@ import { ref, computed } from 'vue';
 const route = useRoute();
 const menuOpen = ref(false);
 
-// The sticky bar hides on the booking/quote flows (they have their own CTAs).
-const showMobileBar = computed(() => !['booking', 'quote'].includes(route.name));
+// The sticky bar hides on booking because that flow has its own CTA.
+const showMobileBar = computed(() => route.name !== 'booking');
 </script>
 
 <template>

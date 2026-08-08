@@ -1,18 +1,15 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue';
-import { gallery, galleryFilters } from '~/data/site.js';
+import { gallery } from '~/data/site.js';
 
 useHead({ title: 'Gallery — SLP Events' });
 
-const filter = ref('All');
 const lightbox = ref(-1);
 
-const filtered = computed(() => (filter.value === 'All' ? gallery : gallery.filter((g) => g.cat === filter.value)));
-const current = computed(() => (lightbox.value >= 0 && lightbox.value < filtered.value.length ? filtered.value[lightbox.value] : null));
+const current = computed(() => (lightbox.value >= 0 && lightbox.value < gallery.length ? gallery[lightbox.value] : null));
 
-const setFilter = (f) => { filter.value = f; lightbox.value = -1; };
-const next = () => { lightbox.value = (lightbox.value + 1) % filtered.value.length; };
-const prev = () => { lightbox.value = (lightbox.value - 1 + filtered.value.length) % filtered.value.length; };
+const next = () => { lightbox.value = (lightbox.value + 1) % gallery.length; };
+const prev = () => { lightbox.value = (lightbox.value - 1 + gallery.length) % gallery.length; };
 
 const onKey = (e) => {
     if (lightbox.value < 0) return;
@@ -35,32 +32,38 @@ onUnmounted(() => window.removeEventListener('keydown', onKey));
             </div>
         </section>
 
-        <!-- FILTERS + MASONRY -->
+        <!-- MASONRY -->
         <section class="max-w-[1240px] mx-auto px-6 pt-[clamp(36px,5vw,56px)] pb-[clamp(72px,9vw,110px)]">
-            <div class="flex flex-wrap gap-2.5 justify-center mb-10">
-                <button
-                    v-for="f in galleryFilters"
-                    :key="f"
-                    class="cursor-pointer px-[18px] py-[9px] rounded-full text-xs font-semibold tracking-[0.1em] uppercase transition-all duration-200 border"
-                    :class="f === filter ? 'border-gold-line bg-[rgba(var(--accent-rgb),0.12)] text-gold-300' : 'border-hairline bg-transparent text-ink-300 hover:text-ink-200'"
-                    @click="setFilter(f)"
-                >{{ f }}</button>
-            </div>
             <div class="[columns:300px_3] [column-gap:18px]">
                 <div
-                    v-for="(g, i) in filtered"
+                    v-for="(g, i) in gallery"
                     :key="g.label"
                     class="group relative [break-inside:avoid] mb-[18px] rounded-xl overflow-hidden border border-subtle cursor-zoom-in transition-colors duration-300 hover:border-gold-line"
                     @click="lightbox = i"
                 >
-                    <img :src="g.img" :alt="g.label" loading="lazy" class="w-full block object-cover" :style="{ aspectRatio: g.ratio }">
+                    <img v-if="g.type === 'image'" :src="g.src" :alt="g.label" loading="lazy" class="w-full block object-cover" :style="{ aspectRatio: g.ratio }">
+                    <video
+                        v-else
+                        :src="g.src"
+                        class="w-full block object-cover"
+                        :style="{ aspectRatio: g.ratio }"
+                        muted
+                        loop
+                        playsinline
+                        preload="metadata"
+                        @mouseenter="$event.currentTarget.play()"
+                        @mouseleave="$event.currentTarget.pause()"
+                    ></video>
                     <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(var(--scrim-rgb),0)_55%,rgba(var(--scrim-rgb),0.78)_100%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex flex-col justify-end p-[18px]">
                         <span class="font-display font-medium text-[17px] text-ivory">{{ g.label }}</span>
-                        <span class="text-[10.5px] tracking-[0.18em] uppercase text-gold-400 mt-1">{{ g.cat }}</span>
+                        <span class="text-[10.5px] tracking-[0.18em] uppercase text-gold-400 mt-1">{{ g.type === 'video' ? 'Video' : 'Photo' }}</span>
                     </div>
+                    <span v-if="g.type === 'video'" class="absolute top-3 right-3 w-10 h-10 rounded-full bg-[rgba(var(--scrim-rgb),0.68)] border border-[rgba(var(--line-rgb),0.18)] text-ivory flex items-center justify-center backdrop-blur-md">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                    </span>
                 </div>
             </div>
-            <p class="mt-8 mb-0 text-center text-[13px] text-ink-400">Photography shown is representative — swap in your own event captures anytime.</p>
+            <p class="mt-8 mb-0 text-center text-[13px] text-ink-400">Real event photos and videos from SLP productions.</p>
         </section>
 
         <!-- LIGHTBOX -->
@@ -71,11 +74,19 @@ onUnmounted(() => window.removeEventListener('keydown', onKey));
                 @click="lightbox = -1"
             >
                 <div class="relative max-w-[1080px] w-full cursor-default" @click.stop>
-                    <img :src="current.big" :alt="current.label" class="w-full max-h-[78vh] object-contain rounded-xl block">
+                    <img v-if="current.type === 'image'" :src="current.full" :alt="current.label" class="w-full max-h-[78vh] object-contain rounded-xl block">
+                    <video
+                        v-else
+                        :src="current.full"
+                        class="w-full max-h-[78vh] object-contain rounded-xl block bg-black"
+                        controls
+                        autoplay
+                        playsinline
+                    ></video>
                     <div class="flex items-center justify-between gap-4 mt-4">
                         <div>
                             <div class="font-display font-medium text-xl text-ivory">{{ current.label }}</div>
-                            <div class="text-[11px] tracking-[0.18em] uppercase text-gold-400 mt-1">{{ current.cat }}</div>
+                            <div class="text-[11px] tracking-[0.18em] uppercase text-gold-400 mt-1">{{ current.type === 'video' ? 'Video' : 'Photo' }}</div>
                         </div>
                         <div class="flex gap-2.5">
                             <button aria-label="Previous" class="w-11 h-11 rounded-full border border-[rgba(var(--line-rgb),0.2)] bg-[rgba(var(--line-rgb),0.05)] text-ivory cursor-pointer flex items-center justify-center hover:border-gold-line hover:text-gold-300 transition-colors" @click="prev">

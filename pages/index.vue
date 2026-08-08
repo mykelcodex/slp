@@ -42,8 +42,8 @@ const stats = [
 ];
 
 const eventTiles = [
-    { label: 'Weddings', img: img('1519741497674-611481863552', 700) },
-    { label: 'Proposals', img: img('1605100804763-247f67b3557e', 700) },
+    { label: 'Weddings', img: '/images/first-dance-clouds.jpeg' },
+    { label: 'Proposals', img: '/images/marry-me-rooftop.jpeg' },
     { label: 'Birthdays', img: img('1530103862676-de8c9debad1d', 700) },
     { label: 'Corporate', img: img('1540575467063-178a50c2df87', 700) },
     { label: 'Graduations', img: img('1541339907198-e08756dedf3f', 700) },
@@ -51,9 +51,10 @@ const eventTiles = [
 ];
 
 const portfolio = [
-    { img: img('1492684223066-81342ee5ff30', 800), alt: 'Gala finale' },
-    { img: img('1504680177321-2e6a879aac86', 800), alt: 'Fog & haze set design' },
-    { img: img('1514525253161-7a46d19cd819', 800), alt: 'Launch party' },
+    { img: '/images/marry-me-marquee.jpeg', alt: 'MARRY ME marquee setup' },
+    { img: '/images/cold-spark-fountains.jpeg', alt: 'Cold spark fountains' },
+    { img: '/images/led-robot-performer.jpeg', alt: 'LED robot performer' },
+    { img: '/images/wedding-ballroom-production.jpeg', alt: 'Ballroom production glow' },
 ];
 
 const process = [
@@ -253,13 +254,6 @@ const process = [
                 <div v-reveal class="grid grid-cols-[repeat(auto-fit,minmax(min(160px,100%),1fr))] gap-[clamp(10px,1.6vw,16px)]">
                     <NuxtLink v-for="p in portfolio" :key="p.alt" to="/gallery" class="relative rounded-xl overflow-hidden aspect-[4/5] border border-subtle">
                         <img :src="p.img" :alt="p.alt" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
-                    </NuxtLink>
-                    <NuxtLink to="/gallery" class="relative rounded-xl overflow-hidden aspect-[4/5] border border-subtle no-underline">
-                        <img :src="img('1498931299472-f7a63a5a1cfa', 800)" alt="Rooftop fireworks finale" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
-                        <div class="absolute inset-0 bg-[rgba(var(--scrim-rgb),0.55)] flex items-center justify-center flex-col gap-2">
-                            <span class="font-display font-medium text-[clamp(28px,3vw,38px)] text-ivory">+200</span>
-                            <span class="text-[11px] tracking-[0.2em] uppercase text-gold-300">More moments</span>
-                        </div>
                     </NuxtLink>
                 </div>
             </div>

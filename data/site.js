@@ -1,10 +1,6 @@
 // Site-wide content data, extracted 1:1 from the design.
 
-export const PHONE_NUMBER = '15550000000';
 export const SERVICE_AREA = 'Serving the Tri-State Area & beyond';
-
-export const phoneDisplay = () =>
-    '+' + PHONE_NUMBER.replace(/(\d)(\d{3})(\d{3})(\d{4})$/, '$1 ($2) $3-$4');
 
 export const img = (id, w = 900) =>
     `https://images.unsplash.com/photo-${id}?w=${w}&q=80&auto=format&fit=crop`;
@@ -20,30 +16,8 @@ export const menuItems = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About Us' },
     { id: 'services', label: 'Services' },
-    { id: 'entertainment', label: 'Signature Entertainment' },
-    { id: 'effects', label: 'Special Effects' },
-    { id: 'marquee', label: 'Marquee Rentals' },
-    { id: 'events', label: 'Events We Serve' },
     { id: 'gallery', label: 'Gallery' },
-    { id: 'testimonials', label: 'Testimonials' },
-    { id: 'faq', label: 'FAQ' },
-    { id: 'quote', label: 'Custom Quote' },
-];
-
-export const footerExplore = [
-    { id: 'about', label: 'About Us' },
     { id: 'events', label: 'Events We Serve' },
-    { id: 'gallery', label: 'Gallery' },
-    { id: 'testimonials', label: 'Testimonials' },
-    { id: 'faq', label: 'FAQ' },
-    { id: 'booking', label: 'Book Your Event' },
-];
-
-export const footerServices = [
-    { id: 'entertainment', label: 'Signature Entertainment' },
-    { id: 'effects', label: 'Special Effects' },
-    { id: 'marquee', label: 'Marquee Rentals' },
-    { id: 'quote', label: 'Custom Quote' },
 ];
 
 export const serviceOptions = [
@@ -54,13 +28,6 @@ export const serviceOptions = [
     'Cold Sparklers',
     'Fog Effects',
     'Marquee Letters',
-];
-
-export const budgets = ['Under $1,000', '$1,000 – $2,500', '$2,500 – $5,000', '$5,000+', 'Not sure yet'];
-
-export const addons = [
-    'Fog & Haze',
-    'Extra performance hour',
 ];
 
 export const testimonials = [
@@ -96,8 +63,8 @@ export const faqs = [
 export const faqCategories = ['Booking', 'Setup & Venue', 'Travel', 'Safety', 'Payments'];
 
 export const eventTypes = [
-    { name: 'Weddings', img: img('1519741497674-611481863552', 800), desc: 'Cold sparks on the first dance, clouds at your feet.', services: ['Dancing on the Clouds', 'Cold Sparklers', 'Marquee Letters'] },
-    { name: 'Proposals', img: img('1605100804763-247f67b3557e', 800), desc: 'The question deserves a set design.', services: ['MARRY ME Letters', 'Cold Sparklers', 'Rose-petal styling'] },
+    { name: 'Weddings', img: '/images/first-dance-clouds.jpeg', desc: 'Cold sparks on the first dance, clouds at your feet.', services: ['Dancing on the Clouds', 'Cold Sparklers', 'Marquee Letters'] },
+    { name: 'Proposals', img: '/images/marry-me-rooftop.jpeg', desc: 'The question deserves a set design.', services: ['MARRY ME Letters', 'Cold Sparklers', 'Rose-petal styling'] },
     { name: 'Engagements', img: img('1520854221256-17451cc331bf', 800), desc: 'Keep the yes going all night.', services: ['Cold Sparklers', 'Fog & Haze', 'Marquee Letters'] },
     { name: 'Anniversaries', img: img('1414235077428-338989a2e8c0', 800), desc: 'A milestone lit like the first night.', services: ['Dancing on the Clouds', 'Light-up Numbers', 'Fog & Haze'] },
     { name: 'Birthdays', img: img('1530103862676-de8c9debad1d', 800), desc: 'From first birthdays to fortieths — lit, literally.', services: ['LED Robots', 'Fog Effects', 'Light-up Numbers'] },
@@ -113,23 +80,20 @@ export const eventTypes = [
     { name: 'Private Celebrations', img: img('1511795409834-ef04bbd61622', 800), desc: 'Any excuse to celebrate is a good one.', services: ['Cold Sparklers', 'Marquee Letters', 'Bubble Effects'] },
 ];
 
-const g = (id, label, cat, ratio) => ({ img: img(id, 900), big: img(id, 1600), label, cat, ratio });
+const imageItem = (src, label, ratio = '4/5') => ({ type: 'image', src, full: src, label, ratio });
+const videoItem = (src, label, ratio = '9/16') => ({ type: 'video', src, full: src, label, ratio });
+
 export const gallery = [
-    g('1492684223066-81342ee5ff30', 'Grand finale — private gala', 'Effects', '4/5'),
-    g('1511285560929-80b456fea0bc', 'First dance under cold sparks', 'Weddings', '4/3'),
-    g('1485827404703-89b55fcc595e', 'Robot performer meet & greet', 'Performers', '3/4'),
-    g('1514525253161-7a46d19cd819', 'Corporate launch after-party', 'Corporate', '4/3'),
-    g('1498931299472-f7a63a5a1cfa', 'Rooftop fireworks finale', 'Effects', '4/3'),
-    g('1519167758481-83f550bb49b3', 'Ballroom reveal', 'Weddings', '4/3'),
-    g('1574391884720-bbc3740c59d1', 'LED robots take the floor', 'Performers', '3/4'),
-    g('1506157786151-b8491531f063', 'Festival main stage', 'Parties', '4/3'),
-    g('1540575467063-178a50c2df87', 'Awards night', 'Corporate', '4/3'),
-    g('1518199266791-5375a83190b7', 'Marquee glow', 'Weddings', '4/3'),
-    g('1527529482837-4698179dc6ce', 'Birthday toast', 'Parties', '3/4'),
-    g('1467810563316-b5476525c0f9', 'Cold sparkler, up close', 'Effects', '4/3'),
-    g('1530103862676-de8c9debad1d', 'Golden birthday', 'Parties', '4/5'),
-    g('1469371670807-013ccf25f16a', 'Ceremony aisle at dusk', 'Weddings', '4/3'),
-    g('1519741347686-c1e0aadf4611', 'Powder performer, mid-set', 'Performers', '4/3'),
-    g('1504680177321-2e6a879aac86', 'Fog & haze set design', 'Effects', '4/3'),
+    imageItem('/images/wedding-ballroom-production.jpeg', 'Ballroom production glow', '4/5'),
+    videoItem('/videos/VIDEO-2026-07-29-11-36-29.mp4', 'Live event highlight', '9/16'),
+    imageItem('/images/cold-spark-fountains.jpeg', 'Cold spark fountains', '4/3'),
+    imageItem('/images/PHOTO-2026-07-29-11-36-32%202.jpg', 'Celebration entrance moment', '3/4'),
+    imageItem('/images/marry-me-rooftop.jpeg', 'Rooftop proposal scene', '4/5'),
+    videoItem('/videos/VIDEO-2026-07-29-11-36-31.mp4', 'Spark effect in motion', '9/16'),
+    imageItem('/images/led-robot-performer.jpeg', 'LED robot performer', '3/4'),
+    imageItem('/images/gorilla.jpeg', 'Giant performer appearance', '4/5'),
+    imageItem('/images/marry-me-marquee.jpeg', 'MARRY ME marquee setup', '4/3'),
+    videoItem('/videos/VIDEO-2026-07-29-11-36-29%202.mp4', 'Reception floor energy', '9/16'),
+    imageItem('/images/first-dance-clouds.jpeg', 'First dance on clouds', '4/3'),
+    imageItem('/images/PHOTO-2026-07-29-11-36-31.jpg', 'Signature event setup', '3/4'),
 ];
-export const galleryFilters = ['All', 'Weddings', 'Performers', 'Effects', 'Corporate', 'Parties'];

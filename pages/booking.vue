@@ -1,6 +1,6 @@
 <script setup>
 import { computed, reactive, ref } from 'vue';
-import { img, serviceOptions, budgets, addons } from '~/data/site.js';
+import { img, serviceOptions } from '~/data/site.js';
 
 useHead({ title: 'Book Your Event — SLP Events' });
 
@@ -9,14 +9,53 @@ const eventTypes = ['Wedding', 'Proposal', 'Engagement', 'Birthday', 'Anniversar
 const steps = [
     { n: 1, label: 'Your Event' },
     { n: 2, label: 'Experiences' },
-    { n: 3, label: 'Budget' },
-    { n: 4, label: 'Contact' },
+    { n: 3, label: 'Contact' },
+];
+
+const consultationWindows = [
+    { label: '5-7 PM', times: ['5:00 PM', '5:30 PM', '6:00 PM', '6:30 PM'] },
+    { label: '7-9 PM', times: ['7:00 PM', '7:30 PM', '8:00 PM', '8:30 PM', '9:00 PM'] },
+];
+const eventTimeOptions = [
+    '8:00 AM',
+    '8:30 AM',
+    '9:00 AM',
+    '9:30 AM',
+    '10:00 AM',
+    '10:30 AM',
+    '11:00 AM',
+    '11:30 AM',
+    '12:00 PM',
+    '12:30 PM',
+    '1:00 PM',
+    '1:30 PM',
+    '2:00 PM',
+    '2:30 PM',
+    '3:00 PM',
+    '3:30 PM',
+    '4:00 PM',
+    '4:30 PM',
+    '5:00 PM',
+    '5:30 PM',
+    '6:00 PM',
+    '6:30 PM',
+    '7:00 PM',
+    '7:30 PM',
+    '8:00 PM',
+    '8:30 PM',
+    '9:00 PM',
+    '9:30 PM',
+    '10:00 PM',
+    '10:30 PM',
+    '11:00 PM',
+    '11:30 PM',
+    '12:00 AM',
 ];
 
 const step = ref(1);
 const submitted = ref(false);
 const error = ref('');
-const bk = reactive({ eventType: '', date: '', guests: '', venue: '', services: [], budget: '', addons: [], name: '', email: '', phone: '', notes: '' });
+const bk = reactive({ eventType: '', date: '', startTime: '', endTime: '', venue: '', city: '', notes: '', services: [], consultationDate: '', consultationTime: '', name: '', email: '', phone: '' });
 
 const toggle = (list, v) => {
     const i = list.indexOf(v);
@@ -24,13 +63,22 @@ const toggle = (list, v) => {
     else list.splice(i, 1);
 };
 
-const nextLabel = computed(() => (step.value === 4 ? 'Send Inquiry' : 'Continue'));
-const summary = computed(() => `${bk.eventType || 'Your event'}${bk.date ? ' · ' + bk.date : ''} · ${bk.services.length} experience${bk.services.length === 1 ? '' : 's'}`);
+const nextLabel = computed(() => (step.value === 3 ? 'Send Inquiry' : 'Continue'));
+const eventTiming = computed(() => {
+    if (bk.startTime && bk.endTime) return `${bk.startTime} to ${bk.endTime}`;
+    if (bk.startTime) return `Starts ${bk.startTime}`;
+    if (bk.endTime) return `Ends ${bk.endTime}`;
+    return '';
+});
+const summary = computed(() => {
+    const details = [bk.eventType || 'Your event', bk.date, eventTiming.value].filter(Boolean).join(' · ');
+    return `${details} · ${bk.services.length} experience${bk.services.length === 1 ? '' : 's'}`;
+});
 
 const back = () => { step.value = Math.max(1, step.value - 1); error.value = ''; };
 const next = () => {
-    if (step.value === 4) {
-        if (!bk.name.trim() || !bk.email.trim()) { error.value = 'Please add your name and email so we can reach you.'; return; }
+    if (step.value === 3) {
+        if (!bk.name.trim() || !bk.email.trim() || !bk.phone.trim()) { error.value = 'Please add your name, email, and phone so we can reach you.'; return; }
         submitted.value = true;
         error.value = '';
         return;
@@ -41,7 +89,7 @@ const next = () => {
 const restart = () => {
     submitted.value = false;
     step.value = 1;
-    Object.assign(bk, { eventType: '', date: '', guests: '', venue: '', services: [], budget: '', addons: [], name: '', email: '', phone: '', notes: '' });
+    Object.assign(bk, { eventType: '', date: '', startTime: '', endTime: '', venue: '', city: '', notes: '', services: [], consultationDate: '', consultationTime: '', name: '', email: '', phone: '' });
 };
 </script>
 
@@ -52,7 +100,7 @@ const restart = () => {
             <div class="max-w-[900px] mx-auto px-6 pt-[clamp(150px,18vw,200px)] pb-[clamp(48px,6vw,72px)] flex flex-col items-center text-center gap-5">
                 <UiEyebrow>Book Your Event</UiEyebrow>
                 <h1 class="m-0 font-display font-semibold text-[clamp(40px,6.4vw,76px)] leading-[1.04] text-ivory [animation:riseUp_900ms_cubic-bezier(0.16,1,0.3,1)_both]">Let's create your <em class="italic text-gold-300">moment</em></h1>
-                <p class="m-0 max-w-[54ch] text-[clamp(15px,1.6vw,17px)] leading-[1.75] text-ink-200 [animation:riseUp_900ms_cubic-bezier(0.16,1,0.3,1)_0.2s_both]">Four quick steps. No payment now — we'll reply with a custom proposal within 24 hours.</p>
+                <p class="m-0 max-w-[54ch] text-[clamp(15px,1.6vw,17px)] leading-[1.75] text-ink-200 [animation:riseUp_900ms_cubic-bezier(0.16,1,0.3,1)_0.2s_both]">Three quick steps. No payment now — we'll reply with a custom proposal within 24 hours.</p>
             </div>
         </section>
 
@@ -74,36 +122,58 @@ const restart = () => {
             </div>
 
             <!-- WIZARD -->
-            <div v-reveal class="rounded-[20px] border border-[rgba(var(--line-rgb),0.1)] bg-ink-850 p-[clamp(24px,4vw,44px)] flex flex-col gap-7">
+            <div v-reveal class="rounded-xl border border-[rgba(var(--line-rgb),0.12)] bg-[linear-gradient(180deg,rgba(var(--chip-rgb),0.72),rgba(var(--chip-rgb),0.52))] overflow-hidden">
                 <template v-if="!submitted">
-                    <!-- STEPPER -->
-                    <div class="flex items-center gap-2.5 overflow-x-auto pb-1">
-                        <div v-for="st in steps" :key="st.n" class="flex items-center gap-2.5 flex-1 min-w-fit">
-                            <div
-                                class="w-[38px] h-[38px] rounded-full flex items-center justify-center font-mono text-[13px] flex-none transition-all duration-300"
-                                :class="st.n < step
-                                    ? 'bg-gold-500 text-on-accent border border-gold-500'
-                                    : st.n === step
-                                        ? 'bg-[rgba(var(--accent-rgb),0.12)] text-gold-300 border border-gold-line shadow-[0_0_18px_rgba(var(--accent-rgb),0.25)]'
-                                        : 'bg-transparent text-ink-400 border border-hairline'"
-                            >{{ st.n }}</div>
-                            <span class="text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300" :class="st.n <= step ? 'text-ivory-dim' : 'text-ink-400'">{{ st.label }}</span>
-                            <div class="flex-1 h-px min-w-[18px]" :class="st.n < step ? 'bg-gold-line' : 'bg-[rgba(var(--line-rgb),0.12)]'"></div>
+                    <div class="px-[clamp(22px,4vw,40px)] pt-[clamp(22px,4vw,36px)] pb-5 border-b border-subtle bg-[rgba(var(--scrim-rgb),0.16)]">
+                        <div class="flex items-start justify-between gap-5 mb-6">
+                            <div>
+                                <p class="m-0 text-[11px] tracking-[0.18em] uppercase text-gold-400">Inquiry Form</p>
+                                <h2 class="m-0 mt-2 font-display font-semibold text-[clamp(26px,3.2vw,36px)] text-ivory">{{ steps[step - 1].label }}</h2>
+                            </div>
+                            <div class="px-3 py-2 rounded-md border border-hairline bg-ink-900 text-[11px] tracking-[0.14em] uppercase text-ink-300 whitespace-nowrap">
+                                Step {{ step }} of 3
+                            </div>
+                        </div>
+                        <!-- STEPPER -->
+                        <div class="grid grid-cols-3 gap-2">
+                            <button
+                                v-for="st in steps"
+                                :key="st.n"
+                                type="button"
+                                class="h-1.5 rounded-full border-0 p-0 transition-colors duration-300"
+                                :class="st.n <= step ? 'bg-gold-500' : 'bg-[rgba(var(--line-rgb),0.14)]'"
+                                :aria-label="st.label"
+                                @click="step = st.n"
+                            ></button>
                         </div>
                     </div>
 
+                    <div class="p-[clamp(22px,4vw,40px)] flex flex-col gap-7">
+
                     <!-- STEP 1 -->
-                    <div v-if="step === 1" class="flex flex-col gap-5">
-                        <h2 class="m-0 font-display font-semibold text-[clamp(24px,3vw,32px)] text-ivory">Tell us about the event</h2>
-                        <UiSelect v-model="bk.eventType" label="Event type">
-                            <option value="">Select an event type…</option>
-                            <option v-for="t in eventTypes" :key="t" :value="t">{{ t }}</option>
-                        </UiSelect>
-                        <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4">
+                    <div v-if="step === 1" class="flex flex-col gap-6">
+                        <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
+                            <UiSelect v-model="bk.eventType" label="Event type">
+                                <option value="">Select an event type...</option>
+                                <option v-for="t in eventTypes" :key="t" :value="t">{{ t }}</option>
+                            </UiSelect>
                             <UiInput v-model="bk.date" label="Event date" type="date"></UiInput>
-                            <UiInput v-model="bk.guests" label="Guest count" type="number" placeholder="e.g. 120"></UiInput>
                         </div>
-                        <UiInput v-model="bk.venue" label="Venue / city" placeholder="Venue name or city — TBD is fine"></UiInput>
+                        <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4">
+                            <UiSelect v-model="bk.startTime" label="Start time">
+                                <option value="">Select start time...</option>
+                                <option v-for="time in eventTimeOptions" :key="'start-' + time" :value="time">{{ time }}</option>
+                            </UiSelect>
+                            <UiSelect v-model="bk.endTime" label="End time">
+                                <option value="">Select end time...</option>
+                                <option v-for="time in eventTimeOptions" :key="'end-' + time" :value="time">{{ time }}</option>
+                            </UiSelect>
+                        </div>
+                        <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
+                            <UiInput v-model="bk.venue" label="Venue" placeholder="Venue name — TBD is fine"></UiInput>
+                            <UiInput v-model="bk.city" label="City" placeholder="City or service area"></UiInput>
+                        </div>
+                        <UiTextarea v-model="bk.notes" label="Describe your event" placeholder="Surprise entrance? Specific song cue? Venue quirks? Tell us everything." :rows="4"></UiTextarea>
                     </div>
 
                     <!-- STEP 2 -->
@@ -133,48 +203,22 @@ const restart = () => {
                     </div>
 
                     <!-- STEP 3 -->
-                    <div v-else-if="step === 3" class="flex flex-col gap-6">
-                        <div>
-                            <h2 class="m-0 mb-1.5 font-display font-semibold text-[clamp(24px,3vw,32px)] text-ivory">Budget &amp; finishing touches</h2>
-                            <p class="m-0 text-[13.5px] text-ink-300">A range helps us recommend the right scale — it's not a commitment.</p>
-                        </div>
-                        <div class="flex flex-col gap-3">
-                            <span class="text-xs tracking-[0.14em] uppercase text-gold-400">Budget range</span>
-                            <div class="flex flex-wrap gap-2.5">
-                                <button
-                                    v-for="b in budgets"
-                                    :key="b"
-                                    type="button"
-                                    class="cursor-pointer px-5 py-3 rounded-full text-[13.5px] font-semibold transition-all duration-200 border"
-                                    :class="bk.budget === b ? 'border-gold-line bg-[rgba(var(--accent-rgb),0.12)] text-gold-300' : 'border-hairline bg-transparent text-ink-300 hover:text-ink-200'"
-                                    @click="bk.budget = b"
-                                >{{ b }}</button>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-3">
-                            <span class="text-xs tracking-[0.14em] uppercase text-gold-400">Add-ons (optional)</span>
-                            <div class="flex flex-wrap gap-2.5">
-                                <button
-                                    v-for="a in addons"
-                                    :key="a"
-                                    type="button"
-                                    class="cursor-pointer px-5 py-3 rounded-full text-[13.5px] font-semibold transition-all duration-200 border"
-                                    :class="bk.addons.includes(a) ? 'border-gold-line bg-[rgba(var(--accent-rgb),0.12)] text-gold-300' : 'border-hairline bg-transparent text-ink-300 hover:text-ink-200'"
-                                    @click="toggle(bk.addons, a)"
-                                >{{ a }}</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- STEP 4 -->
                     <div v-else class="flex flex-col gap-5">
                         <h2 class="m-0 font-display font-semibold text-[clamp(24px,3vw,32px)] text-ivory">Where should we send the proposal?</h2>
                         <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4">
-                            <UiInput v-model="bk.name" label="Your name" placeholder="First & last name"></UiInput>
-                            <UiInput v-model="bk.email" label="Email" type="email" placeholder="you@email.com"></UiInput>
+                            <UiInput v-model="bk.consultationDate" label="Consultation date" type="date"></UiInput>
+                            <UiSelect v-model="bk.consultationTime" label="Consultation time">
+                                <option value="">Select a time...</option>
+                                <optgroup v-for="window in consultationWindows" :key="window.label" :label="window.label">
+                                    <option v-for="time in window.times" :key="time" :value="time">{{ time }}</option>
+                                </optgroup>
+                            </UiSelect>
                         </div>
-                        <UiInput v-model="bk.phone" label="Phone (optional)" type="tel" placeholder="For quick questions only"></UiInput>
-                        <UiTextarea v-model="bk.notes" label="Anything else we should know?" placeholder="Surprise entrance? Specific song cue? Venue quirks? Tell us everything." :rows="4"></UiTextarea>
+                        <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4">
+                            <UiInput v-model="bk.name" label="Your name *" placeholder="First & last name"></UiInput>
+                            <UiInput v-model="bk.email" label="Email *" type="email" placeholder="you@email.com"></UiInput>
+                        </div>
+                        <UiInput v-model="bk.phone" label="Phone *" type="tel" placeholder="For quick questions only"></UiInput>
                         <p v-if="error" class="m-0 text-[13.5px] text-[#c65a50]">{{ error }}</p>
                     </div>
 
@@ -185,11 +229,12 @@ const restart = () => {
                             <UiButton @click="next">{{ nextLabel }}</UiButton>
                         </div>
                     </div>
+                    </div>
                 </template>
 
                 <!-- SUCCESS -->
                 <div v-else class="flex flex-col items-center text-center gap-5 py-[clamp(24px,4vw,48px)] px-2">
-                    <div class="w-[88px] h-[88px] rounded-full bg-[rgba(var(--accent-rgb),0.12)] border border-[rgba(var(--accent-rgb),0.5)] flex items-center justify-center shadow-glow">
+                    <div class="w-[88px] h-[88px] rounded-full bg-[rgba(var(--accent-rgb),0.12)] border border-[rgba(var(--accent-rgb),0.5)] flex items-center justify-center">
                         <svg width="36" height="36" viewBox="0 0 64 64"><path d="M32 8 L37 27 L56 32 L37 37 L32 56 L27 37 L8 32 L27 27 Z" fill="var(--c-gold300)"></path></svg>
                     </div>
                     <h2 class="m-0 font-display font-semibold text-[clamp(28px,3.6vw,40px)] text-ivory">Your moment is in motion.</h2>
