@@ -3,6 +3,7 @@
 defineProps({
     label: { type: String, default: '' },
     hint: { type: String, default: '' },
+    error: { type: String, default: '' },
     type: { type: String, default: 'text' },
     placeholder: { type: String, default: '' },
     maxlength: { type: Number, default: null },
@@ -19,9 +20,12 @@ const emit = defineEmits(['update:modelValue']);
             :placeholder="placeholder"
             :maxlength="maxlength || undefined"
             :value="modelValue"
-            class="w-full box-border font-sans text-[15px] text-ivory bg-ink-900 border border-hairline rounded-md px-4 py-[13px] outline-none transition-[border-color,box-shadow] duration-200 [color-scheme:dark] placeholder:text-ink-400 focus:border-gold-line focus:shadow-[0_0_0_3px_rgba(var(--accent-rgb),0.12)]"
+            class="w-full box-border font-sans text-[15px] text-ivory bg-ink-900 border rounded-md px-4 py-[13px] outline-none transition-[border-color,box-shadow] duration-200 [color-scheme:dark] placeholder:text-ink-400 focus:border-gold-line focus:shadow-[0_0_0_3px_rgba(var(--accent-rgb),0.12)]"
+            :class="error ? 'border-[#c65a50] shadow-[0_0_0_3px_rgba(198,90,80,0.12)]' : 'border-hairline'"
+            :aria-invalid="error ? 'true' : 'false'"
             @input="emit('update:modelValue', $event.target.value)"
         >
+        <span v-if="error" class="text-xs text-[#e08a80]">{{ error }}</span>
         <span v-if="hint" class="text-xs text-ink-300">{{ hint }}</span>
     </div>
 </template>

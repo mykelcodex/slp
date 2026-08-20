@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "nuxt": "^3.13.0",
+    "resend": "^6.21.0",
     "vue": "^3.4.0"
   },
   "devDependencies": {

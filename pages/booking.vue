@@ -54,13 +54,54 @@ const eventTimeOptions = [
 
 const step = ref(1);
 const submitted = ref(false);
+const isSending = ref(false);
 const error = ref('');
 const bk = reactive({ eventType: '', date: '', startTime: '', endTime: '', venue: '', city: '', notes: '', services: [], consultationDate: '', consultationTime: '', name: '', email: '', phone: '' });
+const errors = reactive({});
 
 const toggle = (list, v) => {
     const i = list.indexOf(v);
     if (i === -1) list.push(v);
     else list.splice(i, 1);
+    errors.services = '';
+};
+
+const requiredMessage = (label) => `${label} is required.`;
+const isBlank = (value) => !String(value || '').trim();
+const clearError = (field) => { errors[field] = ''; };
+const clearErrors = () => {
+    Object.keys(errors).forEach((field) => { errors[field] = ''; });
+};
+
+const validateStep = (targetStep = step.value) => {
+    clearErrors();
+
+    if (targetStep === 1) {
+        if (isBlank(bk.eventType)) errors.eventType = requiredMessage('Event type');
+        if (isBlank(bk.date)) errors.date = requiredMessage('Event date');
+        if (isBlank(bk.startTime)) errors.startTime = requiredMessage('Start time');
+        if (isBlank(bk.endTime)) errors.endTime = requiredMessage('End time');
+        if (isBlank(bk.venue)) errors.venue = requiredMessage('Venue');
+        if (isBlank(bk.city)) errors.city = requiredMessage('City');
+        if (isBlank(bk.notes)) errors.notes = requiredMessage('Describe your event');
+    }
+
+    if (targetStep === 2 && bk.services.length === 0) {
+        errors.services = 'Choose at least one experience.';
+    }
+
+    if (targetStep === 3) {
+        if (isBlank(bk.consultationDate)) errors.consultationDate = requiredMessage('Consultation date');
+        if (isBlank(bk.consultationTime)) errors.consultationTime = requiredMessage('Consultation time');
+        if (isBlank(bk.name)) errors.name = requiredMessage('Your name');
+        if (isBlank(bk.email)) errors.email = requiredMessage('Email');
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(bk.email.trim())) errors.email = 'Enter a valid email address.';
+        if (isBlank(bk.phone)) errors.phone = requiredMessage('Phone');
+    }
+
+    const hasErrors = Object.values(errors).some(Boolean);
+    error.value = hasErrors ? 'Please complete the highlighted fields.' : '';
+    return !hasErrors;
 };
 
 const nextLabel = computed(() => (step.value === 3 ? 'Send Inquiry' : 'Continue'));
@@ -75,20 +116,62 @@ const summary = computed(() => {
     return `${details} · ${bk.services.length} experience${bk.services.length === 1 ? '' : 's'}`;
 });
 
-const back = () => { step.value = Math.max(1, step.value - 1); error.value = ''; };
-const next = () => {
-    if (step.value === 3) {
-        if (!bk.name.trim() || !bk.email.trim() || !bk.phone.trim()) { error.value = 'Please add your name, email, and phone so we can reach you.'; return; }
-        submitted.value = true;
+const back = () => { step.value = Math.max(1, step.value - 1); error.value = ''; clearErrors(); };
+const goToStep = (targetStep) => {
+    if (targetStep <= step.value || validateStep(step.value)) {
+        step.value = targetStep;
         error.value = '';
+        clearErrors();
+    }
+};
+const next = async () => {
+    if (step.value === 3) {
+        if (!validateStep(3)) return;
+        if (isSending.value) return;
+
+        isSending.value = true;
+        error.value = '';
+        try {
+            const response = await fetch('/.netlify/functions/booking-inquiry', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    eventType: bk.eventType,
+                    date: bk.date,
+                    startTime: bk.startTime,
+                    endTime: bk.endTime,
+                    venue: bk.venue,
+                    city: bk.city,
+                    notes: bk.notes,
+                    services: bk.services,
+                    consultationDate: bk.consultationDate,
+                    consultationTime: bk.consultationTime,
+                    name: bk.name,
+                    email: bk.email,
+                    phone: bk.phone,
+                }),
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(result.message || 'Unable to send inquiry.');
+            submitted.value = true;
+        } catch (err) {
+            error.value = err?.message || 'We could not send your inquiry right now. Please try again.';
+        } finally {
+            isSending.value = false;
+        }
         return;
     }
+    if (!validateStep(step.value)) return;
     step.value += 1;
     error.value = '';
+    clearErrors();
 };
 const restart = () => {
     submitted.value = false;
+    isSending.value = false;
     step.value = 1;
+    error.value = '';
+    clearErrors();
     Object.assign(bk, { eventType: '', date: '', startTime: '', endTime: '', venue: '', city: '', notes: '', services: [], consultationDate: '', consultationTime: '', name: '', email: '', phone: '' });
 };
 </script>
@@ -143,7 +226,7 @@ const restart = () => {
                                 class="h-1.5 rounded-full border-0 p-0 transition-colors duration-300"
                                 :class="st.n <= step ? 'bg-gold-500' : 'bg-[rgba(var(--line-rgb),0.14)]'"
                                 :aria-label="st.label"
-                                @click="step = st.n"
+                                @click="goToStep(st.n)"
                             ></button>
                         </div>
                     </div>
@@ -153,27 +236,27 @@ const restart = () => {
                     <!-- STEP 1 -->
                     <div v-if="step === 1" class="flex flex-col gap-6">
                         <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
-                            <UiSelect v-model="bk.eventType" label="Event type">
+                            <UiSelect v-model="bk.eventType" label="Event type *" :error="errors.eventType" @update:modelValue="clearError('eventType')">
                                 <option value="">Select an event type...</option>
                                 <option v-for="t in eventTypes" :key="t" :value="t">{{ t }}</option>
                             </UiSelect>
-                            <UiInput v-model="bk.date" label="Event date" type="date"></UiInput>
+                            <UiInput v-model="bk.date" label="Event date *" type="date" :error="errors.date" @update:modelValue="clearError('date')"></UiInput>
                         </div>
                         <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4">
-                            <UiSelect v-model="bk.startTime" label="Start time">
+                            <UiSelect v-model="bk.startTime" label="Start time *" :error="errors.startTime" @update:modelValue="clearError('startTime')">
                                 <option value="">Select start time...</option>
                                 <option v-for="time in eventTimeOptions" :key="'start-' + time" :value="time">{{ time }}</option>
                             </UiSelect>
-                            <UiSelect v-model="bk.endTime" label="End time">
+                            <UiSelect v-model="bk.endTime" label="End time *" :error="errors.endTime" @update:modelValue="clearError('endTime')">
                                 <option value="">Select end time...</option>
                                 <option v-for="time in eventTimeOptions" :key="'end-' + time" :value="time">{{ time }}</option>
                             </UiSelect>
                         </div>
                         <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
-                            <UiInput v-model="bk.venue" label="Venue" placeholder="Venue name — TBD is fine"></UiInput>
-                            <UiInput v-model="bk.city" label="City" placeholder="City or service area"></UiInput>
+                            <UiInput v-model="bk.venue" label="Venue *" placeholder="Venue name — TBD is fine" :error="errors.venue" @update:modelValue="clearError('venue')"></UiInput>
+                            <UiInput v-model="bk.city" label="City *" placeholder="City or service area" :error="errors.city" @update:modelValue="clearError('city')"></UiInput>
                         </div>
-                        <UiTextarea v-model="bk.notes" label="Describe your event" placeholder="Surprise entrance? Specific song cue? Venue quirks? Tell us everything." :rows="4"></UiTextarea>
+                        <UiTextarea v-model="bk.notes" label="Describe your event *" placeholder="Surprise entrance? Specific song cue? Venue quirks? Tell us everything." :rows="4" :error="errors.notes" @update:modelValue="clearError('notes')"></UiTextarea>
                     </div>
 
                     <!-- STEP 2 -->
@@ -181,6 +264,7 @@ const restart = () => {
                         <div>
                             <h2 class="m-0 mb-1.5 font-display font-semibold text-[clamp(24px,3vw,32px)] text-ivory">Choose your experiences</h2>
                             <p class="m-0 text-[13.5px] text-ink-300">Pick as many as you like — we'll choreograph them into one show.</p>
+                            <p v-if="errors.services" class="m-0 mt-2 text-[13.5px] text-[#e08a80]">{{ errors.services }}</p>
                         </div>
                         <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
                             <button
@@ -206,8 +290,8 @@ const restart = () => {
                     <div v-else class="flex flex-col gap-5">
                         <h2 class="m-0 font-display font-semibold text-[clamp(24px,3vw,32px)] text-ivory">Where should we send the proposal?</h2>
                         <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4">
-                            <UiInput v-model="bk.consultationDate" label="Consultation date" type="date"></UiInput>
-                            <UiSelect v-model="bk.consultationTime" label="Consultation time">
+                            <UiInput v-model="bk.consultationDate" label="Consultation date *" type="date" :error="errors.consultationDate" @update:modelValue="clearError('consultationDate')"></UiInput>
+                            <UiSelect v-model="bk.consultationTime" label="Consultation time *" :error="errors.consultationTime" @update:modelValue="clearError('consultationTime')">
                                 <option value="">Select a time...</option>
                                 <optgroup v-for="window in consultationWindows" :key="window.label" :label="window.label">
                                     <option v-for="time in window.times" :key="time" :value="time">{{ time }}</option>
@@ -215,10 +299,10 @@ const restart = () => {
                             </UiSelect>
                         </div>
                         <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4">
-                            <UiInput v-model="bk.name" label="Your name *" placeholder="First & last name"></UiInput>
-                            <UiInput v-model="bk.email" label="Email *" type="email" placeholder="you@email.com"></UiInput>
+                            <UiInput v-model="bk.name" label="Your name *" placeholder="First & last name" :error="errors.name" @update:modelValue="clearError('name')"></UiInput>
+                            <UiInput v-model="bk.email" label="Email *" type="email" placeholder="you@email.com" :error="errors.email" @update:modelValue="clearError('email')"></UiInput>
                         </div>
-                        <UiInput v-model="bk.phone" label="Phone *" type="tel" placeholder="For quick questions only"></UiInput>
+                        <UiInput v-model="bk.phone" label="Phone *" type="tel" placeholder="For quick questions only" :error="errors.phone" @update:modelValue="clearError('phone')"></UiInput>
                         <p v-if="error" class="m-0 text-[13.5px] text-[#c65a50]">{{ error }}</p>
                     </div>
 
@@ -226,7 +310,7 @@ const restart = () => {
                     <div class="flex justify-between gap-3 border-t border-subtle pt-[22px]">
                         <UiButton v-if="step > 1" variant="ghost" @click="back">Back</UiButton>
                         <div class="ml-auto">
-                            <UiButton @click="next">{{ nextLabel }}</UiButton>
+                            <UiButton :disabled="isSending" :class="isSending ? 'opacity-70 cursor-wait' : ''" @click="next">{{ isSending ? 'Sending...' : nextLabel }}</UiButton>
                         </div>
                     </div>
                     </div>

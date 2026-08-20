@@ -28,3 +28,4 @@ coverage/
 # Misc
 .nitro/
 .cache/
+.env

@@ -2,6 +2,7 @@
 // Design-system Textarea: same treatment as UiInput.
 defineProps({
     label: { type: String, default: '' },
+    error: { type: String, default: '' },
     placeholder: { type: String, default: '' },
     rows: { type: Number, default: 4 },
     modelValue: { type: String, default: '' },
@@ -16,8 +17,11 @@ const emit = defineEmits(['update:modelValue']);
             :placeholder="placeholder"
             :rows="rows"
             :value="modelValue"
-            class="w-full box-border resize-y font-sans text-[15px] leading-[1.6] text-ivory bg-ink-900 border border-hairline rounded-md px-4 py-[13px] outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-ink-400 focus:border-gold-line focus:shadow-[0_0_0_3px_rgba(var(--accent-rgb),0.12)]"
+            class="w-full box-border resize-y font-sans text-[15px] leading-[1.6] text-ivory bg-ink-900 border rounded-md px-4 py-[13px] outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-ink-400 focus:border-gold-line focus:shadow-[0_0_0_3px_rgba(var(--accent-rgb),0.12)]"
+            :class="error ? 'border-[#c65a50] shadow-[0_0_0_3px_rgba(198,90,80,0.12)]' : 'border-hairline'"
+            :aria-invalid="error ? 'true' : 'false'"
             @input="emit('update:modelValue', $event.target.value)"
         ></textarea>
+        <span v-if="error" class="text-xs text-[#e08a80]">{{ error }}</span>
     </div>
 </template>
