@@ -12,6 +12,11 @@ export const navItems = [
     { id: 'events', label: 'Events' },
 ];
 
+export const socialLinks = [
+    { id: 'instagram', label: 'Instagram', handle: '@staylitpartyatl', href: 'https://instagram.com/staylitpartyatl' },
+    { id: 'tiktok', label: 'TikTok', handle: '@staylitpartyatl', href: 'https://tiktok.com/@staylitpartyatl' },
+];
+
 export const menuItems = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About Us' },
