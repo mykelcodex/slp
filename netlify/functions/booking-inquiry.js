@@ -2,6 +2,7 @@ import { Resend } from 'resend';
 
 const ADMIN_EMAIL = 'slpeventsinfo@gmail.com';
 const DEFAULT_FROM = 'SLP Events <onboarding@resend.dev>';
+const EVENT_TIMEZONE = process.env.SLP_EVENT_TIMEZONE || 'America/New_York';
 
 const json = (statusCode, body) => ({
     statusCode,
@@ -60,6 +61,130 @@ const eventTiming = (payload) => {
     if (payload.startTime) return `Starts ${payload.startTime}`;
     if (payload.endTime) return `Ends ${payload.endTime}`;
     return 'Not provided';
+};
+
+const pad = (value) => String(value).padStart(2, '0');
+
+const parseClockTime = (value = '') => {
+    const match = String(value).trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+    if (!match) return null;
+
+    let hours = Number(match[1]);
+    const minutes = Number(match[2]);
+    const period = match[3].toUpperCase();
+
+    if (hours < 1 || hours > 12 || minutes > 59) return null;
+    if (period === 'AM' && hours === 12) hours = 0;
+    if (period === 'PM' && hours !== 12) hours += 12;
+
+    return { hours, minutes };
+};
+
+const parseDateParts = (value = '') => {
+    const match = String(value).trim().match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!match) return null;
+
+    return {
+        year: Number(match[1]),
+        month: Number(match[2]),
+        day: Number(match[3]),
+    };
+};
+
+const toIcsLocalDateTime = ({ year, month, day, hours, minutes }) =>
+    `${year}${pad(month)}${pad(day)}T${pad(hours)}${pad(minutes)}00`;
+
+const addOneDay = ({ year, month, day, hours, minutes }) => {
+    const next = new Date(Date.UTC(year, month - 1, day + 1, hours, minutes));
+    return {
+        year: next.getUTCFullYear(),
+        month: next.getUTCMonth() + 1,
+        day: next.getUTCDate(),
+        hours,
+        minutes,
+    };
+};
+
+const compareDateTimes = (a, b) => {
+    const left = Date.UTC(a.year, a.month - 1, a.day, a.hours, a.minutes);
+    const right = Date.UTC(b.year, b.month - 1, b.day, b.hours, b.minutes);
+    return left - right;
+};
+
+const escapeIcsText = (value = '') =>
+    String(value)
+        .replace(/\\/g, '\\\\')
+        .replace(/\n/g, '\\n')
+        .replace(/\r/g, '')
+        .replace(/,/g, '\\,')
+        .replace(/;/g, '\\;');
+
+const foldIcsLine = (line) => {
+    const limit = 75;
+    const chunks = [];
+    let remaining = line;
+
+    while (remaining.length > limit) {
+        chunks.push(remaining.slice(0, limit));
+        remaining = ` ${remaining.slice(limit)}`;
+    }
+
+    chunks.push(remaining);
+    return chunks.join('\r\n');
+};
+
+const buildCalendarAttachment = (payload) => {
+    const date = parseDateParts(payload.date);
+    const start = parseClockTime(payload.startTime);
+    const end = parseClockTime(payload.endTime);
+    if (!date || !start || !end) return null;
+
+    const startDateTime = { ...date, ...start };
+    let endDateTime = { ...date, ...end };
+    if (compareDateTimes(endDateTime, startDateTime) <= 0) {
+        endDateTime = addOneDay(endDateTime);
+    }
+
+    const uid = `slp-${Date.now()}-${payload.email.replace(/[^a-z0-9]/gi, '')}@slpevents`;
+    const title = `SLP ${payload.eventType} - ${payload.name}`;
+    const location = [payload.venue, payload.city].filter(Boolean).join(', ');
+    const description = [
+        `Client: ${payload.name}`,
+        `Email: ${payload.email}`,
+        `Phone: ${payload.phone}`,
+        `Event type: ${payload.eventType}`,
+        `Experiences: ${listText(payload.services)}`,
+        `Consultation: ${[payload.consultationDate, payload.consultationTime].filter(Boolean).join(' at ')}`,
+        '',
+        `Notes: ${payload.notes}`,
+    ].join('\n');
+
+    const lines = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//SLP Events//Booking Inquiry//EN',
+        'CALSCALE:GREGORIAN',
+        'METHOD:REQUEST',
+        'BEGIN:VEVENT',
+        `UID:${uid}`,
+        `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z')}`,
+        `DTSTART;TZID=${EVENT_TIMEZONE}:${toIcsLocalDateTime(startDateTime)}`,
+        `DTEND;TZID=${EVENT_TIMEZONE}:${toIcsLocalDateTime(endDateTime)}`,
+        `SUMMARY:${escapeIcsText(title)}`,
+        `LOCATION:${escapeIcsText(location)}`,
+        `DESCRIPTION:${escapeIcsText(description)}`,
+        `ORGANIZER;CN=SLP Events:mailto:${ADMIN_EMAIL}`,
+        `ATTENDEE;CN=SLP Events;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE:mailto:${ADMIN_EMAIL}`,
+        'STATUS:TENTATIVE',
+        'TRANSP:OPAQUE',
+        'END:VEVENT',
+        'END:VCALENDAR',
+    ];
+
+    return {
+        filename: 'slp-booking-inquiry.ics',
+        content: lines.map(foldIcsLine).join('\r\n'),
+    };
 };
 
 const detailRow = (label, value) => `
@@ -141,7 +266,7 @@ const confirmationEmail = (payload) =>
         `,
     });
 
-const sendEmail = async ({ to, subject, html, replyTo }) => {
+const sendEmail = async ({ to, subject, html, replyTo, attachments }) => {
     const apiKey = process.env.RESEND_API_KEY;
     if (!apiKey) {
         throw new Error('Missing RESEND_API_KEY');
@@ -154,6 +279,7 @@ const sendEmail = async ({ to, subject, html, replyTo }) => {
         subject,
         html,
         replyTo,
+        attachments,
     });
 
     if (response.error) {
@@ -197,12 +323,15 @@ export const handler = async (event) => {
     }
 
     try {
+        const calendarAttachment = buildCalendarAttachment(payload);
+
         await Promise.all([
             sendEmail({
                 to: [ADMIN_EMAIL],
                 subject: `New SLP booking inquiry from ${payload.name}`,
                 html: adminEmail(payload),
                 replyTo: payload.email,
+                attachments: calendarAttachment ? [calendarAttachment] : undefined,
             }),
             sendEmail({
                 to: [payload.email],

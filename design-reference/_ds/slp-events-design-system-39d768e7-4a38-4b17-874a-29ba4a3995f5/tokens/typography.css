@@ -6,7 +6,7 @@
 :root {
   --font-display: 'Bodoni Moda', 'Times New Roman', Georgia, serif;
   --font-sans: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
 
   /* Type scale */
   --text-xs:   0.75rem;   /* 12 */

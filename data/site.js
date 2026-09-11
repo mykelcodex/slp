@@ -93,6 +93,7 @@ export const gallery = [
     videoItem('/videos/VIDEO-2026-07-29-11-36-29.mp4', 'Live event highlight', '9/16'),
     imageItem('/images/cold-spark-fountains.jpeg', 'Cold spark fountains', '4/3'),
     imageItem('/images/PHOTO-2026-07-29-11-36-32%202.jpg', 'Celebration entrance moment', '3/4'),
+    imageItem('/images/smoking_machine.jpeg', 'Smoking machine effect', '9/16'),
     imageItem('/images/marry-me-rooftop.jpeg', 'Rooftop proposal scene', '4/5'),
     videoItem('/videos/VIDEO-2026-07-29-11-36-31.mp4', 'Spark effect in motion', '9/16'),
     imageItem('/images/led-robot-performer.jpeg', 'LED robot performer', '3/4'),

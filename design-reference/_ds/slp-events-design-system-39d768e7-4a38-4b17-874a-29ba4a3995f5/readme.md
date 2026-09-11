@@ -2,13 +2,14 @@
 
 Premium event-entertainment brand. SLP Events specializes in interactive performers, luxury special effects, and memorable enhancements for weddings, proposals, birthdays, graduations, corporate events, and private celebrations. The promise: **make every entrance grand, every celebration unforgettable, and every client feel like a VIP.**
 
-The system expresses that promise as **"Midnight & Champagne"** — a dark-first, theatrical, editorial aesthetic where deep noir surfaces are lit by champagne-gold and the four-point *spark* motif.
+The system expresses that promise as **"Midnight & Champagne"** — a dark-first, theatrical, editorial aesthetic where deep noir surfaces are lit by champagne-gold and the four-point _spark_ motif.
 
 ## Sources
+
 No codebase, Figma file, brand assets, or prior design materials were provided. This system was authored from scratch from the company description above. Everything here (palette, type pairing, spark motif, wordmark, components, website kit) is an original brand proposal intended as a **starting point to iterate on** — not a recreation of an existing identity.
 
 - **Logo:** none supplied. The wordmark is a type-based lockup (Bodoni Moda) + the spark mark. Replace with a real logo when available (`components/brand/Logo.jsx`, `assets/spark-mark.svg`).
-- **Fonts:** no licensed font files supplied — see *Fonts* below (substitution flagged).
+- **Fonts:** no licensed font files supplied — see _Fonts_ below (substitution flagged).
 - **Imagery:** none supplied — the website kit uses branded placeholder tiles (`Photo`).
 
 ---
@@ -16,17 +17,17 @@ No codebase, Figma file, brand assets, or prior design materials were provided. 
 ## CONTENT FUNDAMENTALS — how SLP writes
 
 - **Voice:** confident, warm, and cinematic — a maître d' who is also a showman. Aspirational but never cold or corporate.
-- **Person:** speaks to *you* ("You're the VIP"), and about *we/our* team. Second person for the client, first-person-plural for the company.
-- **Tone:** short, declarative, benefit-first. Leads with the *feeling* (the room stopping, the entrance, the moment), then the detail.
+- **Person:** speaks to _you_ ("You're the VIP"), and about _we/our_ team. Second person for the client, first-person-plural for the company.
+- **Tone:** short, declarative, benefit-first. Leads with the _feeling_ (the room stopping, the entrance, the moment), then the detail.
 - **Casing:** Title/sentence case for headlines; **UPPERCASE with wide tracking** for eyebrows, labels, buttons, and nav. Never all-caps for body.
 - **Emoji:** not used in product copy. A single ★ (star) or the ◆ spark glyph may appear as an ornament, sparingly.
 - **Signature lines & words:** "grand," "unforgettable," "VIP," "signature," "moment," "breathtaking," "dazzle," "magic," "spark."
 - **Examples**
-  - Hero: *"Make every entrance unforgettable."*
-  - Value: *"You're the VIP. We handle the magic."*
-  - CTA: *"Let's create your moment."* / *"Start Planning"* / *"Book an Experience"*
-  - Reassurance: *"Indoor-safe · Fully insured · Venue-approved."*
-  - Avoid: *"Solutions for your event needs,"* *"Please submit an inquiry form."*
+  - Hero: _"Make every entrance unforgettable."_
+  - Value: _"You're the VIP. We handle the magic."_
+  - CTA: _"Let's create your moment."_ / _"Start Planning"_ / _"Book an Experience"_
+  - Reassurance: _"Indoor-safe · Fully insured · Venue-approved."_
+  - Avoid: _"Solutions for your event needs,"_ _"Please submit an inquiry form."_
 
 ---
 
@@ -69,7 +70,7 @@ Reusable primitives. Each has `<Name>.jsx`, `<Name>.d.ts`, `<Name>.prompt.md`, a
 - **Feedback** (`components/feedback/`): **Dialog**, **Tooltip**, **Accordion**
 - **Navigation** (`components/navigation/`): **Tabs**
 
-*This is a from-scratch brand with no source-defined component inventory, so a standard primitive set was authored, sized to the brand's needs (event marketing site + booking flow). No speculative extras beyond this set.*
+_This is a from-scratch brand with no source-defined component inventory, so a standard primitive set was authored, sized to the brand's needs (event marketing site + booking flow). No speculative extras beyond this set._
 
 ## UI kits
 
@@ -95,8 +96,9 @@ Specimen cards live in `foundations/` (Colors, Type, Spacing, Brand) plus one ca
 ## Fonts (substitution flagged)
 
 No licensed brand fonts were provided. Nearest premium matches are loaded from **Google Fonts** via `tokens/fonts.css`:
+
 - Display/headings → **Bodoni Moda**
 - Body/UI → **Manrope**
 - Mono/details → **JetBrains Mono**
 
-To use licensed fonts, drop files into `assets/fonts/` and replace the `@import` in `tokens/fonts.css` with local `@font-face` rules (keep the same `--font-display / --font-sans / --font-mono` variable names).
+To use licensed fonts, drop files into `assets/fonts/` and replace the `@import` in `tokens/fonts.css` with local `@font-face` rules (keep the same `--font-display / --font-sans / --` variable names).

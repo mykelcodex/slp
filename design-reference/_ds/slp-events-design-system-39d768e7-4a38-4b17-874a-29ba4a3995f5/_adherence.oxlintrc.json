@@ -1,8 +1,5 @@
 {
-  "plugins": [
-    "react",
-    "import"
-  ],
+  "plugins": ["react", "import"],
   "rules": {
     "react/forbid-elements": [
       "warn",
@@ -154,9 +151,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "**/index.js"
-      ],
+      "files": ["**/index.js"],
       "rules": {
         "no-restricted-imports": "off"
       }
@@ -244,7 +239,7 @@
       "--ember-300",
       "--ember-500",
       "--font-display",
-      "--font-mono",
+      "--",
       "--font-sans",
       "--glow-ember",
       "--glow-gold",
@@ -405,7 +400,7 @@
       "--glow-ember": "shadow",
       "--font-display": "font",
       "--font-sans": "font",
-      "--font-mono": "font",
+      "--": "font",
       "--text-xs": "font",
       "--text-sm": "font",
       "--text-base": "font",
@@ -475,10 +470,6 @@
       "--dur-slow": "other",
       "--dur-cinematic": "other"
     },
-    "fontFamilies": [
-      "Bodoni Moda",
-      "JetBrains Mono",
-      "Manrope"
-    ]
+    "fontFamilies": ["Bodoni Moda", "JetBrains Mono", "Manrope"]
   }
 }
