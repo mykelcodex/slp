@@ -95,21 +95,15 @@ const parseDateParts = (value = '') => {
 const toIcsLocalDateTime = ({ year, month, day, hours, minutes }) =>
     `${year}${pad(month)}${pad(day)}T${pad(hours)}${pad(minutes)}00`;
 
-const addOneDay = ({ year, month, day, hours, minutes }) => {
-    const next = new Date(Date.UTC(year, month - 1, day + 1, hours, minutes));
+const addMinutes = ({ year, month, day, hours, minutes }, minutesToAdd) => {
+    const next = new Date(Date.UTC(year, month - 1, day, hours, minutes + minutesToAdd));
     return {
         year: next.getUTCFullYear(),
         month: next.getUTCMonth() + 1,
         day: next.getUTCDate(),
-        hours,
-        minutes,
+        hours: next.getUTCHours(),
+        minutes: next.getUTCMinutes(),
     };
-};
-
-const compareDateTimes = (a, b) => {
-    const left = Date.UTC(a.year, a.month - 1, a.day, a.hours, a.minutes);
-    const right = Date.UTC(b.year, b.month - 1, b.day, b.hours, b.minutes);
-    return left - right;
 };
 
 const escapeIcsText = (value = '') =>
@@ -135,25 +129,24 @@ const foldIcsLine = (line) => {
 };
 
 const buildCalendarAttachment = (payload) => {
-    const date = parseDateParts(payload.date);
-    const start = parseClockTime(payload.startTime);
-    const end = parseClockTime(payload.endTime);
-    if (!date || !start || !end) return null;
+    const date = parseDateParts(payload.consultationDate);
+    const start = parseClockTime(payload.consultationTime);
+    if (!date || !start) return null;
 
     const startDateTime = { ...date, ...start };
-    let endDateTime = { ...date, ...end };
-    if (compareDateTimes(endDateTime, startDateTime) <= 0) {
-        endDateTime = addOneDay(endDateTime);
-    }
+    const endDateTime = addMinutes(startDateTime, 30);
 
     const uid = `slp-${Date.now()}-${payload.email.replace(/[^a-z0-9]/gi, '')}@slpevents`;
-    const title = `SLP ${payload.eventType} - ${payload.name}`;
-    const location = [payload.venue, payload.city].filter(Boolean).join(', ');
+    const title = `SLP Consultation - ${payload.name}`;
+    const location = 'Phone consultation';
     const description = [
         `Client: ${payload.name}`,
         `Email: ${payload.email}`,
         `Phone: ${payload.phone}`,
         `Event type: ${payload.eventType}`,
+        `Event date: ${payload.date}`,
+        `Event time: ${eventTiming(payload)}`,
+        `Venue: ${[payload.venue, payload.city].filter(Boolean).join(', ')}`,
         `Experiences: ${listText(payload.services)}`,
         `Consultation: ${[payload.consultationDate, payload.consultationTime].filter(Boolean).join(' at ')}`,
         '',
