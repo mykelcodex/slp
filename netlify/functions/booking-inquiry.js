@@ -332,6 +332,7 @@ export const handler = async (event) => {
                 subject: 'SLP Events received your booking inquiry',
                 html: confirmationEmail(payload),
                 replyTo: ADMIN_EMAIL,
+                attachments: calendarAttachment ? [calendarAttachment] : undefined,
             }),
         ]);
 
