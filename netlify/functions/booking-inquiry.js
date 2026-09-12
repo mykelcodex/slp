@@ -3,6 +3,7 @@ import { Resend } from 'resend';
 const ADMIN_EMAIL = 'slpeventsinfo@gmail.com';
 const DEFAULT_FROM = 'SLP Events <onboarding@resend.dev>';
 const EVENT_TIMEZONE = process.env.SLP_EVENT_TIMEZONE || 'America/New_York';
+const CALENDAR_METHOD = 'PUBLISH';
 
 const json = (statusCode, body) => ({
     statusCode,
@@ -164,7 +165,7 @@ const buildCalendarAttachment = (payload) => {
         'VERSION:2.0',
         'PRODID:-//SLP Events//Booking Inquiry//EN',
         'CALSCALE:GREGORIAN',
-        'METHOD:REQUEST',
+        `METHOD:${CALENDAR_METHOD}`,
         'BEGIN:VEVENT',
         `UID:${uid}`,
         `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z')}`,
@@ -174,7 +175,6 @@ const buildCalendarAttachment = (payload) => {
         `LOCATION:${escapeIcsText(location)}`,
         `DESCRIPTION:${escapeIcsText(description)}`,
         `ORGANIZER;CN=SLP Events:mailto:${ADMIN_EMAIL}`,
-        `ATTENDEE;CN=SLP Events;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=FALSE:mailto:${ADMIN_EMAIL}`,
         'STATUS:TENTATIVE',
         'TRANSP:OPAQUE',
         'END:VEVENT',
@@ -183,7 +183,8 @@ const buildCalendarAttachment = (payload) => {
 
     return {
         filename: 'slp-booking-inquiry.ics',
-        content: lines.map(foldIcsLine).join('\r\n'),
+        content: `${lines.map(foldIcsLine).join('\r\n')}\r\n`,
+        contentType: `text/calendar; method=${CALENDAR_METHOD}; charset=UTF-8`,
     };
 };
 
